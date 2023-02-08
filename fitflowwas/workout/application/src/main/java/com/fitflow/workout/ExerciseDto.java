@@ -1,14 +1,10 @@
 package com.fitflow.workout;
 
-
-class Exercise {
+public class ExerciseDto {
     private String name;
     private String tips;
 
-    Exercise() {
-    }
-
-    Exercise(String name, String tips) {
+    ExerciseDto(String name, String tips) {
         this.name = name;
         this.tips = tips;
     }

@@ -19,7 +19,7 @@ class TrainingPlanController {
     }
 
     @PostMapping
-    ResponseEntity<TrainingPlan> create(@RequestBody TrainingPlan toCreate) {
+    ResponseEntity<TrainingPlan> create(@RequestBody TrainingPlanCommand toCreate) {
         TrainingPlanSnapshot result = trainingPlanFacade.save(toCreate);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }

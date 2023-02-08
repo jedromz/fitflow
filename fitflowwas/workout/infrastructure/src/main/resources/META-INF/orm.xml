@@ -20,6 +20,56 @@
                 <column nullable="false"/>
             </basic>
             <basic name="dateEnd"/>
+            <one-to-many name="trainingUnits" fetch="EAGER">
+                <join-column name="trainingPlan_id"/>
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
         </attributes>
     </entity>
+    <entity class="com.fitflow.workout.TrainingUnitSnapshot" access="FIELD">
+        <table name="training_units"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="name">
+                <column nullable="false"/>
+            </basic>
+            <one-to-many name="workouts" fetch="EAGER">
+                <join-column name="trainingUnit_id"/>
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="com.fitflow.workout.WorkoutExerciseSnapshot" access="FIELD">
+        <table name="workout_exercises"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="numberOfReps">
+                <column nullable="false"/>
+            </basic>
+            <basic name="numberOfSets">
+                <column nullable="false"/>
+            </basic>
+            <basic name="suggestedProgression">
+                <column nullable="false"/>
+            </basic>
+        </attributes>
+    </entity>
+    <embeddable class="com.fitflow.workout.Exercise" access="FIELD">
+        <attributes>
+            <basic name="name">
+                <column nullable="false"/>
+            </basic>
+            <basic name="tips">
+                <column nullable="true"/>
+            </basic>
+        </attributes>
+    </embeddable>
 </entity-mappings>

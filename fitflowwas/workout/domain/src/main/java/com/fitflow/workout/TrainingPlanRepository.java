@@ -6,5 +6,5 @@ interface TrainingPlanRepository {
 
     Optional<TrainingPlan> findById(Integer id);
 
-    TrainingPlanSnapshot save(TrainingPlan trainingPlan);
+    TrainingPlan save(TrainingPlan trainingPlan);
 }

@@ -3,8 +3,8 @@ package com.fitflow.workout;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Training Plan is an Aggregate Root for building workouts.
@@ -17,20 +17,25 @@ class TrainingPlan {
                 snapshot.getId(),
                 snapshot.getName(),
                 snapshot.getDateStart(),
-                snapshot.getDateEnd());
+                snapshot.getDateEnd(),
+                snapshot.getTrainingUnits().stream()
+                        .map(tu -> new TrainingUnit(tu.getName(), tu.getWorkouts()
+                                .stream()
+                                .map(we -> new WorkoutExercise(we.getNumberOfReps(), we.getNumberOfSets(), we.getSuggestedProgression(), we.getExercise())).toList())).toList());
     }
 
     private int id;
     private String name;
     private LocalDate dateStart;
     private LocalDate dateEnd;
-    private List<TrainingUnit> trainingUnits = new ArrayList<>();
+    private List<TrainingUnit> trainingUnits;
 
-    private TrainingPlan(int id, String name, LocalDate dateStart, LocalDate dateEnd) {
+    TrainingPlan(int id, String name, LocalDate dateStart, LocalDate dateEnd, List<TrainingUnit> trainingUnits) {
         this.id = id;
         this.name = name;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
+        this.trainingUnits = trainingUnits;
     }
 
     static class TrainingUnit {
@@ -41,6 +46,11 @@ class TrainingPlan {
         TrainingUnit(int id, String name) {
             this.id = id;
             this.name = name;
+        }
+
+        TrainingUnit(String name, List<WorkoutExercise> workouts) {
+            this.name = name;
+            this.workouts = workouts;
         }
 
         void addExercise(WorkoutExercise exercise) {
@@ -65,14 +75,14 @@ class TrainingPlan {
         dateEnd.plus(period);
     }
 
-    void modifyExercise(int trainingUnitId, int exerciseId, int numberOfReps, int numberOfSets, int suggestedProgression) {
-        trainingUnits.stream()
-                .filter(tu -> tu.id == trainingUnitId)
-                .map(tu -> tu.workouts)
-                .flatMap(Collection::stream)
-                .filter(w -> w.getExercise().getExerciseId().id() == exerciseId)
-                .forEach(w -> w.update(numberOfReps, numberOfSets, suggestedProgression));
-    }
+//    void modifyExercise(int trainingUnitId, int exerciseId, int numberOfReps, int numberOfSets, int suggestedProgression) {
+//        trainingUnits.stream()
+//                .filter(tu -> tu.id == trainingUnitId)
+//                .map(tu -> tu.workouts)
+//                .flatMap(Collection::stream)
+//                .filter(w -> w.getExercise().getExerciseId() == exerciseId)
+//                .forEach(w -> w.update(numberOfReps, numberOfSets, suggestedProgression));
+//    }
 
     void addExercise(int trainingUnitId, WorkoutExercise workoutExercise) {
         trainingUnits.stream()
@@ -82,6 +92,6 @@ class TrainingPlan {
 
     TrainingPlanSnapshot getSnapshot() {
         return new TrainingPlanSnapshot(
-                id, name, dateStart, dateEnd);
+                id, name, dateStart, dateEnd, trainingUnits.stream().map(tu -> new TrainingUnitSnapshot(name, tu.workouts.stream().map(w -> new WorkoutExerciseSnapshot(w.getNumberOfReps(), w.getNumberOfSets(), w.getSuggestedProgression(), w.getExercise())).toList())).collect(Collectors.toSet()));
     }
 }

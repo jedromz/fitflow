@@ -23,7 +23,7 @@ class SimpleTrainingPlanRepository implements TrainingPlanRepository {
     }
 
     @Override
-    public TrainingPlanSnapshot save(TrainingPlan trainingPlan) {
-         return sqlTrainingPlanRepository.save(trainingPlan.getSnapshot());
+    public TrainingPlan save(TrainingPlan trainingPlan) {
+        return TrainingPlan.restore(sqlTrainingPlanRepository.save(trainingPlan.getSnapshot()));
     }
 }
