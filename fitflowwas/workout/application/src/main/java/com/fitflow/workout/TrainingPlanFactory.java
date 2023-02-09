@@ -8,6 +8,7 @@ class TrainingPlanFactory {
 
     TrainingPlan from(TrainingPlanDto source) {
         return TrainingPlan.restore(new TrainingPlanSnapshot(
+                source.getId(),
                 source.getName(),
                 source.getDateStart(),
                 source.getDateEnd(),

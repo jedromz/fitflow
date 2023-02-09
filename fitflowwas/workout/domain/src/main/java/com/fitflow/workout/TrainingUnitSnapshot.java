@@ -2,7 +2,7 @@ package com.fitflow.workout;
 
 import java.util.List;
 
-public class TrainingUnitSnapshot {
+class TrainingUnitSnapshot {
     private int id;
     private String name;
     private List<WorkoutExerciseSnapshot> workoutExercises;

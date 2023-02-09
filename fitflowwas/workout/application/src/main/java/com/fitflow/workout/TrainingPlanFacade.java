@@ -15,5 +15,4 @@ public class TrainingPlanFacade {
     public TrainingPlanSnapshot save(TrainingPlanDto toCreate) {
         return trainingPlanRepository.save(trainingPlanFactory.from(toCreate)).getSnapshot();
     }
-
 }
