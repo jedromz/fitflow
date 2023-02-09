@@ -98,6 +98,6 @@ class TrainingPlan {
 
     TrainingPlanSnapshot getSnapshot() {
         return new TrainingPlanSnapshot(
-                id, name, dateStart, dateEnd, trainingUnits.stream().map(tu -> new TrainingUnitSnapshot(name, tu.workouts.stream().map(w -> new WorkoutExerciseSnapshot(w.getNumberOfReps(), w.getNumberOfSets(), w.getSuggestedProgression(), w.getExercise())).toList())).collect(Collectors.toSet()));
+                id, name, dateStart, dateEnd, trainingUnits.stream().map(tu -> new TrainingUnitSnapshot(tu.name, tu.workouts.stream().map(w -> new WorkoutExerciseSnapshot(w.getNumberOfReps(), w.getNumberOfSets(), w.getSuggestedProgression(), w.getExercise())).toList())).collect(Collectors.toSet()));
     }
 }
