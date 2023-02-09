@@ -1,8 +1,10 @@
 package com.fitflow.workout;
 
-import org.springframework.http.HttpStatusCode;
+import com.fitflow.workout.dto.TrainingPlanDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,19 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 class TrainingPlanController {
 
     private final TrainingPlanFacade trainingPlanFacade;
+    private final TrainingPlanQueryRepository trainingPlanQueryRepository;
 
-    TrainingPlanController(TrainingPlanFacade trainingPlanFacade) {
+    TrainingPlanController(TrainingPlanFacade trainingPlanFacade, TrainingPlanQueryRepository trainingPlanQueryRepository) {
         this.trainingPlanFacade = trainingPlanFacade;
+        this.trainingPlanQueryRepository = trainingPlanQueryRepository;
     }
 
     @PostMapping
-    ResponseEntity<TrainingPlan> create(@RequestBody TrainingPlanCommand toCreate) {
-        TrainingPlanSnapshot result = trainingPlanFacade.save(toCreate);
-        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    ResponseEntity<TrainingPlanDto> create(@RequestBody TrainingPlanDto toCreate) {
+        trainingPlanFacade.save(toCreate);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping
-    String ok() {
-        return "OK";
+    @GetMapping("/{id}")
+    ResponseEntity<TrainingPlanDto> get(@PathVariable int id) {
+        return trainingPlanQueryRepository.findDtoById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

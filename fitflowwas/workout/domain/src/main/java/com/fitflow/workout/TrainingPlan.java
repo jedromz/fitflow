@@ -19,9 +19,7 @@ class TrainingPlan {
                 snapshot.getDateStart(),
                 snapshot.getDateEnd(),
                 snapshot.getTrainingUnits().stream()
-                        .map(tu -> new TrainingUnit(tu.getName(), tu.getWorkouts()
-                                .stream()
-                                .map(we -> new WorkoutExercise(we.getNumberOfReps(), we.getNumberOfSets(), we.getSuggestedProgression(), we.getExercise())).toList())).toList());
+                        .map(tu -> TrainingUnit.restore(tu)).toList());
     }
 
     private int id;
@@ -39,6 +37,14 @@ class TrainingPlan {
     }
 
     static class TrainingUnit {
+
+        static TrainingUnit restore(TrainingUnitSnapshot snapshot) {
+            return new TrainingUnit(snapshot.getName(), snapshot.getWorkoutExercises()
+                    .stream()
+                    .peek(tu-> tu.getExercise())
+                    .map(we -> new WorkoutExercise(we.getNumberOfReps(), we.getNumberOfSets(), we.getSuggestedProgression(), we.getExercise())).toList());
+        }
+
         private int id;
         private String name;
         private List<WorkoutExercise> workouts = new ArrayList<>();

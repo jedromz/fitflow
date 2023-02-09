@@ -4,7 +4,7 @@ import java.util.Optional;
 
 interface TrainingPlanRepository {
 
-    Optional<TrainingPlan> findById(Integer id);
-
     TrainingPlan save(TrainingPlan trainingPlan);
+
+    Optional<TrainingPlan> findById(Integer id);
 }

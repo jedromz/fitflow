@@ -37,7 +37,7 @@
             <basic name="name">
                 <column nullable="false"/>
             </basic>
-            <one-to-many name="workouts" fetch="EAGER">
+            <one-to-many name="workoutExercises" fetch="EAGER">
                 <join-column name="trainingUnit_id"/>
                 <cascade>
                     <cascade-all/>

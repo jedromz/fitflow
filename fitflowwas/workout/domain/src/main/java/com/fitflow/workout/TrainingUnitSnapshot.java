@@ -5,7 +5,7 @@ import java.util.List;
 public class TrainingUnitSnapshot {
     private int id;
     private String name;
-    private List<WorkoutExerciseSnapshot> workouts;
+    private List<WorkoutExerciseSnapshot> workoutExercises;
 
     TrainingUnitSnapshot() {
     }
@@ -14,9 +14,9 @@ public class TrainingUnitSnapshot {
         this.name = name;
     }
 
-    TrainingUnitSnapshot(String name, List<WorkoutExerciseSnapshot> workouts) {
+    TrainingUnitSnapshot(String name, List<WorkoutExerciseSnapshot> workoutExercises) {
         this.name = name;
-        this.workouts = workouts;
+        this.workoutExercises = workoutExercises;
     }
 
     int getId() {
@@ -35,11 +35,7 @@ public class TrainingUnitSnapshot {
         this.name = name;
     }
 
-    List<WorkoutExerciseSnapshot> getWorkouts() {
-        return workouts;
-    }
-
-    void setWorkouts(List<WorkoutExerciseSnapshot> workouts) {
-        this.workouts = workouts;
+    List<WorkoutExerciseSnapshot> getWorkoutExercises() {
+        return workoutExercises;
     }
 }
