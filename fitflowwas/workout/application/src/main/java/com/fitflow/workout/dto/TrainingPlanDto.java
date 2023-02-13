@@ -15,6 +15,10 @@ public interface TrainingPlanDto {
 
     LocalDate getDateEnd();
 
+    boolean isDeleted();
+
+    int getVersion();
+
     List<TrainingUnitDto> getTrainingUnits();
 
     class DeserializationImpl implements TrainingPlanDto {
@@ -22,6 +26,8 @@ public interface TrainingPlanDto {
         private String name;
         private LocalDate dateStart;
         private LocalDate dateEnd;
+        boolean deleted;
+        int version;
         private List<TrainingUnitDto> trainingUnits;
 
         public int getId() {
@@ -40,8 +46,19 @@ public interface TrainingPlanDto {
             return dateEnd;
         }
 
+        @Override
+        public boolean isDeleted() {
+            return deleted;
+        }
+
+        @Override
+        public int getVersion() {
+            return version;
+        }
+
         public List<TrainingUnitDto> getTrainingUnits() {
             return trainingUnits;
         }
+
     }
 }

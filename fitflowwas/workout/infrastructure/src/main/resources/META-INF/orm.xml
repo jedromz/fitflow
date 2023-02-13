@@ -16,10 +16,12 @@
             <basic name="name">
                 <column nullable="false"/>
             </basic>
-            <basic name="dateStart">
+            <basic name="deleted">
                 <column nullable="false"/>
             </basic>
-            <basic name="dateEnd"/>
+            <basic name="version">
+                <column nullable="false"/>
+            </basic>
             <one-to-many name="trainingUnits" fetch="EAGER">
                 <join-column name="trainingPlan_id"/>
                 <cascade>
@@ -70,6 +72,14 @@
             <basic name="tips">
                 <column nullable="true"/>
             </basic>
+        </attributes>
+    </embeddable>
+    <embeddable class="com.fitflow.workout.vo.TrainingPlanPeriod" access="FIELD">
+        <attributes>
+            <basic name="dateStart">
+                <column nullable="false"/>
+            </basic>
+            <basic name="dateEnd"/>
         </attributes>
     </embeddable>
 </entity-mappings>

@@ -21,7 +21,6 @@ class SimpleTrainingPlanRepository implements TrainingPlanRepository {
         this.sqlTrainingPlanRepository = sqlTrainingPlanRepository;
     }
 
-
     @Override
     public TrainingPlan save(TrainingPlan trainingPlan) {
         return TrainingPlan.restore(sqlTrainingPlanRepository.save(trainingPlan.getSnapshot()));
@@ -31,4 +30,5 @@ class SimpleTrainingPlanRepository implements TrainingPlanRepository {
     public Optional<TrainingPlan> findById(Integer id) {
         return sqlTrainingPlanRepository.findById(id).map(TrainingPlan::restore);
     }
+
 }

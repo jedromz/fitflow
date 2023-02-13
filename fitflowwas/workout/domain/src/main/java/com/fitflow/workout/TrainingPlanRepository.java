@@ -7,4 +7,5 @@ interface TrainingPlanRepository {
     TrainingPlan save(TrainingPlan trainingPlan);
 
     Optional<TrainingPlan> findById(Integer id);
+
 }

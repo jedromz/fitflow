@@ -1,6 +1,7 @@
 package com.fitflow.workout;
 
 import com.fitflow.workout.dto.TrainingPlanDto;
+import com.fitflow.workout.vo.TrainingPlanPeriod;
 
 import java.util.stream.Collectors;
 
@@ -10,8 +11,10 @@ class TrainingPlanFactory {
         return TrainingPlan.restore(new TrainingPlanSnapshot(
                 source.getId(),
                 source.getName(),
-                source.getDateStart(),
-                source.getDateEnd(),
+                new TrainingPlanPeriod(source.getDateStart(),
+                        source.getDateEnd()),
+                source.isDeleted(),
+                source.getVersion(),
                 source.getTrainingUnits().stream()
                         .map(tu -> new TrainingUnitSnapshot(tu.getName(), tu.getWorkoutExercises()
                                 .stream()

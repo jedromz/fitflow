@@ -3,6 +3,7 @@ package com.fitflow.workout;
 import com.fitflow.workout.dto.TrainingPlanDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,5 +41,11 @@ class TrainingPlanController {
         return trainingPlanQueryRepository.findDtoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity delete(@PathVariable int id) throws Exception {
+        trainingPlanFacade.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

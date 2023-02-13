@@ -1,7 +1,7 @@
 package com.fitflow.workout;
 
-import java.time.LocalDate;
-import java.time.Period;
+import com.fitflow.workout.vo.TrainingPlanPeriod;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,23 +16,26 @@ class TrainingPlan {
         return new TrainingPlan(
                 snapshot.getId(),
                 snapshot.getName(),
-                snapshot.getDateStart(),
-                snapshot.getDateEnd(),
+                snapshot.isDeleted(),
+                snapshot.getVersion(),
+                snapshot.getTrainingPlanPeriod(),
                 snapshot.getTrainingUnits().stream()
-                        .map(tu -> TrainingUnit.restore(tu)).toList());
+                        .map(TrainingUnit::restore).toList());
     }
 
     private int id;
     private String name;
-    private LocalDate dateStart;
-    private LocalDate dateEnd;
+    private boolean deleted;
+    private int version;
+    private TrainingPlanPeriod trainingPlanPeriod;
     private List<TrainingUnit> trainingUnits;
 
-    TrainingPlan(int id, String name, LocalDate dateStart, LocalDate dateEnd, List<TrainingUnit> trainingUnits) {
+    TrainingPlan(int id, String name, boolean deleted, int version, TrainingPlanPeriod trainingPlanPeriod, List<TrainingUnit> trainingUnits) {
         this.id = id;
         this.name = name;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
+        this.deleted = deleted;
+        this.version = version;
+        this.trainingPlanPeriod = trainingPlanPeriod;
         this.trainingUnits = trainingUnits;
     }
 
@@ -41,7 +44,7 @@ class TrainingPlan {
         static TrainingUnit restore(TrainingUnitSnapshot snapshot) {
             return new TrainingUnit(snapshot.getName(), snapshot.getWorkoutExercises()
                     .stream()
-                    .peek(tu-> tu.getExercise())
+                    .peek(tu -> tu.getExercise())
                     .map(we -> new WorkoutExercise(we.getNumberOfReps(), we.getNumberOfSets(), we.getSuggestedProgression(), we.getExercise())).toList());
         }
 
@@ -77,27 +80,18 @@ class TrainingPlan {
         trainingUnits.remove(trainingUnit);
     }
 
-    void extendEndDate(Period period) {
-        dateEnd.plus(period);
-    }
-
-//    void modifyExercise(int trainingUnitId, int exerciseId, int numberOfReps, int numberOfSets, int suggestedProgression) {
-//        trainingUnits.stream()
-//                .filter(tu -> tu.id == trainingUnitId)
-//                .map(tu -> tu.workouts)
-//                .flatMap(Collection::stream)
-//                .filter(w -> w.getExercise().getExerciseId() == exerciseId)
-//                .forEach(w -> w.update(numberOfReps, numberOfSets, suggestedProgression));
-//    }
-
     void addExercise(int trainingUnitId, WorkoutExercise workoutExercise) {
         trainingUnits.stream()
                 .filter(tu -> tu.id == trainingUnitId)
                 .forEach(tu -> tu.addExercise(workoutExercise));
     }
 
+    void softDelete() {
+        this.deleted = true;
+    }
+
     TrainingPlanSnapshot getSnapshot() {
         return new TrainingPlanSnapshot(
-                id, name, dateStart, dateEnd, trainingUnits.stream().map(tu -> new TrainingUnitSnapshot(tu.name, tu.workouts.stream().map(w -> new WorkoutExerciseSnapshot(w.getNumberOfReps(), w.getNumberOfSets(), w.getSuggestedProgression(), w.getExercise())).toList())).collect(Collectors.toSet()));
+                id, name, trainingPlanPeriod, deleted, version, trainingUnits.stream().map(tu -> new TrainingUnitSnapshot(tu.name, tu.workouts.stream().map(w -> new WorkoutExerciseSnapshot(w.getNumberOfReps(), w.getNumberOfSets(), w.getSuggestedProgression(), w.getExercise())).toList())).collect(Collectors.toSet()));
     }
 }
