@@ -5,29 +5,28 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fitflow</groupId>
-    <artifactId>domain-workout</artifactId>
+    <artifactId>report</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>domain</name>
-    <description>domain</description>
+    <name>report</name>
+    <description>report</description>
     <properties>
         <java.version>17</java.version>
     </properties>
+    <packaging>pom</packaging>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.fitflow</groupId>
+            <artifactId>infrastructure-workout</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    <modules>
+
+    </modules>
 
     <build>
         <plugins>

@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.fitflow</groupId>
-    <artifactId>domain-workout</artifactId>
+    <groupId>com.fitflow.report</groupId>
+    <artifactId>application-report</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>domain</name>
-    <description>domain</description>
+    <name>application</name>
+    <description>application</description>
     <properties>
         <java.version>17</java.version>
     </properties>
