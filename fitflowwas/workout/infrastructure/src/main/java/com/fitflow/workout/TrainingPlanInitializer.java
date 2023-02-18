@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public class TrainingPlanInitializer {
+class TrainingPlanInitializer {
     private final TrainingPlanRepository trainingPlanRepository;
 
     public TrainingPlanInitializer(TrainingPlanRepository trainingPlanRepository) {

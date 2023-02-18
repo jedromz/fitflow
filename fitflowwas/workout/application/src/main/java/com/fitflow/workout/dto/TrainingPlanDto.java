@@ -2,7 +2,6 @@ package com.fitflow.workout.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @JsonDeserialize(as = TrainingPlanDto.DeserializationImpl.class)
@@ -11,9 +10,7 @@ public interface TrainingPlanDto {
 
     String getName();
 
-    LocalDate getDateStart();
-
-    LocalDate getDateEnd();
+    TrainingPlanPeriodDto getTrainingPlanPeriod();
 
     boolean isDeleted();
 
@@ -24,8 +21,7 @@ public interface TrainingPlanDto {
     class DeserializationImpl implements TrainingPlanDto {
         private int id;
         private String name;
-        private LocalDate dateStart;
-        private LocalDate dateEnd;
+        private TrainingPlanPeriodDto trainingPlanPeriod;
         boolean deleted;
         int version;
         private List<TrainingUnitDto> trainingUnits;
@@ -38,27 +34,20 @@ public interface TrainingPlanDto {
             return name;
         }
 
-        public LocalDate getDateStart() {
-            return dateStart;
-        }
-
-        public LocalDate getDateEnd() {
-            return dateEnd;
-        }
-
-        @Override
         public boolean isDeleted() {
             return deleted;
         }
 
-        @Override
         public int getVersion() {
             return version;
+        }
+
+        public TrainingPlanPeriodDto getTrainingPlanPeriod() {
+            return trainingPlanPeriod;
         }
 
         public List<TrainingUnitDto> getTrainingUnits() {
             return trainingUnits;
         }
-
     }
 }

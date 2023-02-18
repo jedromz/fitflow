@@ -5,7 +5,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TrainingPlanWarmup implements ApplicationListener<ContextRefreshedEvent> {
+class TrainingPlanWarmup implements ApplicationListener<ContextRefreshedEvent> {
     private final TrainingPlanInitializer trainingPlanInitializer;
 
     public TrainingPlanWarmup(TrainingPlanRepository trainingPlanRepository) {

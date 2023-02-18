@@ -11,8 +11,7 @@ class TrainingPlanFactory {
         return TrainingPlan.restore(new TrainingPlanSnapshot(
                 source.getId(),
                 source.getName(),
-                new TrainingPlanPeriod(source.getDateStart(),
-                        source.getDateEnd()),
+                new TrainingPlanPeriod(source.getTrainingPlanPeriod().getDateStart(), source.getTrainingPlanPeriod().getDateEnd()),
                 source.isDeleted(),
                 source.getVersion(),
                 source.getTrainingUnits().stream()
