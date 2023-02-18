@@ -8,6 +8,7 @@ class TrainingPlanConfiguration {
 
     @Bean
     public TrainingPlanFacade trainingPlanFacade(final TrainingPlanRepository trainingPlanRepository) {
-        return new TrainingPlanFacade(trainingPlanRepository);
+        return new TrainingPlanFacade(trainingPlanRepository, new TrainingPlanFactory());
     }
+
 }

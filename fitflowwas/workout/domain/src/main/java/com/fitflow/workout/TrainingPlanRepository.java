@@ -4,7 +4,8 @@ import java.util.Optional;
 
 interface TrainingPlanRepository {
 
+    TrainingPlan save(TrainingPlan trainingPlan);
+
     Optional<TrainingPlan> findById(Integer id);
 
-    TrainingPlanSnapshot save(TrainingPlan trainingPlan);
 }

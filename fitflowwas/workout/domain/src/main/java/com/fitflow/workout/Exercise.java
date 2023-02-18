@@ -1,38 +1,31 @@
 package com.fitflow.workout;
 
 
-import com.fitflow.workout.vo.ExerciseId;
-import com.fitflow.workout.vo.ExerciseName;
-import com.fitflow.workout.vo.ExerciseTips;
-
 class Exercise {
-    private ExerciseId exerciseId;
-    private ExerciseName name;
-    private ExerciseTips tips;
+    private String name;
+    private String tips;
 
-    Exercise(ExerciseId exerciseId, ExerciseName name, ExerciseTips tips) {
-        this.exerciseId = exerciseId;
+    Exercise() {
+    }
+
+    Exercise(String name, String tips) {
         this.name = name;
         this.tips = tips;
     }
 
-    ExerciseName getName() {
+    String getName() {
         return name;
     }
 
-    void setName(ExerciseName name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    ExerciseTips getTips() {
+    String getTips() {
         return tips;
     }
 
-    void setTips(ExerciseTips tips) {
+    void setTips(String tips) {
         this.tips = tips;
-    }
-
-    ExerciseId getExerciseId() {
-        return exerciseId;
     }
 }

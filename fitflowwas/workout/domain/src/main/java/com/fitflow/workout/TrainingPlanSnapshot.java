@@ -1,23 +1,35 @@
 package com.fitflow.workout;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.fitflow.workout.vo.TrainingPlanPeriod;
+
+import java.util.HashSet;
+import java.util.Set;
 
 class TrainingPlanSnapshot {
     private int id;
     private String name;
-    private LocalDate dateStart;
-    private LocalDate dateEnd;
+    private TrainingPlanPeriod trainingPlanPeriod;
+    private boolean deleted;
+    private int version;
+    private Set<TrainingUnitSnapshot> trainingUnits = new HashSet<>();
+
     TrainingPlanSnapshot() {
     }
 
-    TrainingPlanSnapshot(int id, String name, LocalDate dateStart, LocalDate dateEnd) {
+    TrainingPlanSnapshot(int id, String name, TrainingPlanPeriod trainingPlanPeriod, boolean deleted, int version, Set<TrainingUnitSnapshot> trainingUnits) {
         this.id = id;
         this.name = name;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
+        this.trainingPlanPeriod = trainingPlanPeriod;
+        this.deleted = deleted;
+        this.version = version;
+        this.trainingUnits = trainingUnits;
     }
 
+    TrainingPlanSnapshot(String name, TrainingPlanPeriod trainingPlanPeriod, Set<TrainingUnitSnapshot> trainingUnits) {
+        this.name = name;
+        this.trainingPlanPeriod = trainingPlanPeriod;
+        this.trainingUnits = trainingUnits;
+    }
 
     int getId() {
         return id;
@@ -27,12 +39,19 @@ class TrainingPlanSnapshot {
         return name;
     }
 
-    LocalDate getDateStart() {
-        return dateStart;
+    Set<TrainingUnitSnapshot> getTrainingUnits() {
+        return trainingUnits;
     }
 
-    LocalDate getDateEnd() {
-        return dateEnd;
+    TrainingPlanPeriod getTrainingPlanPeriod() {
+        return trainingPlanPeriod;
     }
 
+    boolean isDeleted() {
+        return deleted;
+    }
+
+    int getVersion() {
+        return version;
+    }
 }
