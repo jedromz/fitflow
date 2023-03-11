@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/training-plans")
 class TrainingPlanController {
-
     private final TrainingPlanFacade trainingPlanFacade;
     private final TrainingPlanQueryRepository trainingPlanQueryRepository;
 

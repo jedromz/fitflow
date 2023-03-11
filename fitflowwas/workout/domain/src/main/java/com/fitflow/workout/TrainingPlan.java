@@ -44,7 +44,6 @@ class TrainingPlan {
         static TrainingUnit restore(TrainingUnitSnapshot snapshot) {
             return new TrainingUnit(snapshot.getName(), snapshot.getWorkoutExercises()
                     .stream()
-                    .peek(tu -> tu.getExercise())
                     .map(we -> new WorkoutExercise(we.getNumberOfReps(), we.getNumberOfSets(), we.getSuggestedProgression(), we.getExercise())).toList());
         }
 
