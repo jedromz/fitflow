@@ -1,0 +1,31 @@
+package com.fitflow.api.mentorships.service;
+
+import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
+import com.fitflow.api.mentorships.repository.MentorshipRepository;
+import com.fitflow.api.mentorships.model.Mentorship;
+import com.fitflow.api.mentorships.repository.TraineeRepository;
+import com.fitflow.api.mentorships.repository.TrainerRepository;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+public class MentorshipService {
+
+    private final TrainerRepository trainerRepository;
+    private final TraineeRepository traineeRepository;
+    private final MentorshipRepository mentorshipRepository;
+    private final ModelMapper modelMapper;
+
+    public Mentorship createMentorship(CreateMentorshipRequest mentorshipRequest) {
+        final var trainer = trainerRepository.findById(mentorshipRequest.getTrainerId())
+                .orElseThrow(() -> new RuntimeException("Trainer not found"));
+        final var trainee = traineeRepository.findById(mentorshipRequest.getTraineeId())
+                .orElseThrow(() -> new RuntimeException("Trainee not found"));
+        final var mentorship = modelMapper.map(mentorshipRequest, Mentorship.class);
+        mentorship.setTrainer(trainer);
+        mentorship.setTrainee(trainee);
+        return mentorshipRepository.save(mentorship);
+    }
+}
