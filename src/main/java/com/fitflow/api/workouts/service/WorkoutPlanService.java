@@ -29,6 +29,6 @@ public class WorkoutPlanService {
         workoutPlan.setTrainee(trainee);
         workoutPlan.setTrainer(trainer);
 
-        return workoutPlan;
+        return workoutPlanRepository.save(workoutPlan);
     }
 }

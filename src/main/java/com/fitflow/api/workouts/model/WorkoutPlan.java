@@ -65,12 +65,3 @@ class WorkoutExercise extends BaseEntity {
     private int reps;
 }
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-class Exercise extends BaseEntity {
-    private String name;
-
-}
