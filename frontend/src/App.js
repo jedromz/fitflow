@@ -5,6 +5,7 @@ import Dashboard from "./pages/trainer/Dashboard";
 import MentorshipsList from "./pages/trainer/MentorshipsList";
 import Exercises from "./pages/trainer/Exercises";
 import Reports from "./pages/trainer/Reports";
+import WorkoutBuilder from "./pages/trainer/WorkoutBuilder";
 
 export default function App() {
     return (
@@ -15,6 +16,7 @@ export default function App() {
                 <Route path="/trainer/:trainerId/mentorships" element={<MentorshipsList />} />
                 <Route path="/trainer/:trainerId/reports" element={<Reports/>} />
                 <Route path="/exercises" element={<Exercises />} />
+                <Route path="/builder" element={<WorkoutBuilder />} />
             </Routes>
         </div>
     );
