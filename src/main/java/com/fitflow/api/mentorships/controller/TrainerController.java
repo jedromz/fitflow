@@ -1,5 +1,6 @@
 package com.fitflow.api.mentorships.controller;
 
+import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.service.MentorshipService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +23,12 @@ public class TrainerController {
     public List<MentorshipResponse> getMentorship(@PathVariable long trainerId) {
         return mentorshipService.findTrainersMentorships(trainerId).stream()
                 .map(mentorship -> modelMapper.map(mentorship, MentorshipResponse.class))
+                .toList();
+    }
+
+    @GetMapping("/{trainerId}/trainees")
+    public List<Trainee> getTrainees(@PathVariable long trainerId) {
+        return mentorshipService.findTrainersTrainees(trainerId).stream()
                 .toList();
     }
 }

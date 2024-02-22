@@ -1,6 +1,7 @@
 package com.fitflow.api.mentorships.service;
 
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
+import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.repository.MentorshipRepository;
 import com.fitflow.api.mentorships.model.Mentorship;
 import com.fitflow.api.mentorships.repository.TraineeRepository;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -33,5 +35,11 @@ public class MentorshipService {
 
     public List<Mentorship> findTrainersMentorships(Long trainerId) {
         return mentorshipRepository.findAllByTrainerId(trainerId);
+    }
+
+    public List<Trainee> findTrainersTrainees(long trainerId) {
+        var trainer = trainerRepository.findById(trainerId)
+                .orElseThrow(() -> new RuntimeException("Trainer not found"));
+        return traineeRepository.findAllByTrainer(trainer);
     }
 }

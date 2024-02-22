@@ -1,6 +1,7 @@
 package com.fitflow.api.mentorships.model;
 
 import com.fitflow.api.base.BaseEntity;
+import com.fitflow.api.reports.Report;
 import com.fitflow.api.workouts.model.WorkoutPlan;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -26,4 +27,6 @@ public class Trainer extends BaseEntity {
     private List<Mentorship> mentorships = new ArrayList<>();
     @OneToMany(mappedBy = "trainer")
     private List<WorkoutPlan> workoutPlans = new ArrayList<>();
+    @OneToMany(mappedBy = "trainer")
+    private List<Report> reports = new ArrayList<>();
 }
