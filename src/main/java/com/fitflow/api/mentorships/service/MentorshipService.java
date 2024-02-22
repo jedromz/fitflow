@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class MentorshipService {
@@ -27,5 +29,9 @@ public class MentorshipService {
         mentorship.setTrainer(trainer);
         mentorship.setTrainee(trainee);
         return mentorshipRepository.save(mentorship);
+    }
+
+    public List<Mentorship> findTrainersMentorships(Long trainerId) {
+        return mentorshipRepository.findAllByTrainerId(trainerId);
     }
 }

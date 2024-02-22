@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MentorshipRepository extends JpaRepository<Mentorship, Long> {
     List<MentorshipResponse> findAllBy();
+    List<Mentorship> findAllByTrainerId(Long trainerId);
 }
