@@ -16,7 +16,7 @@ export default function App() {
                 <Route path="/trainer/:trainerId/mentorships" element={<MentorshipsList />} />
                 <Route path="/trainer/:trainerId/reports" element={<Reports/>} />
                 <Route path="/exercises" element={<Exercises />} />
-                <Route path="/builder" element={<WorkoutBuilder />} />
+                <Route path="/trainer/:trainerId/builder" element={<WorkoutBuilder />} />
             </Routes>
         </div>
     );

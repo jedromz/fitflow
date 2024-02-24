@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HomeIcon, LibraryIcon, InformationCircleIcon } from '@heroicons/react/outline';
+import { HomeIcon, UsersIcon, ClipboardListIcon, ChartBarIcon} from '@heroicons/react/outline'; // Adjusted icons
 
 export default function Appbar() {
     return (
-        // Adjusted the styling here to make the appbar vertical and aligned to the left
         <div className="bg-gray-800 text-white w-20 h-screen p-4 flex flex-col justify-between items-center">
-            {/* No changes needed inside here, just the container's styling */}
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col items-center">
                     <span className="text-2xl font-extrabold pb-5">Fitflow</span>
@@ -16,19 +14,30 @@ export default function Appbar() {
                     <span className="text-xs">Home</span>
                 </div>
                 <div className="flex flex-col items-center">
-                    <Link to="/library" className="hover:text-gray-300">
-                        <LibraryIcon className="h-6 w-6" />
+                    <Link to="/trainees" className="hover:text-gray-300">
+                        <UsersIcon className="h-6 w-6" /> {/* Adjusted for Trainees */}
                     </Link>
-                    <span className="text-xs">Library</span>
+                    <span className="text-xs">Trainees</span>
                 </div>
                 <div className="flex flex-col items-center">
-                    <Link to="/about" className="hover:text-gray-300">
-                        <InformationCircleIcon className="h-6 w-6" />
+                    <Link to="/sessions" className="hover:text-gray-300">
+                        <ClipboardListIcon className="h-6 w-6" /> {/* Sessions or Workouts */}
                     </Link>
-                    <span className="text-xs">About</span>
+                    <span className="text-xs">Sessions</span>
+                </div>
+                <div className="flex flex-col items-center">
+                    <Link to="/progress" className="hover:text-gray-300">
+                        <ChartBarIcon className="h-6 w-6" /> {/* Progress Reports */}
+                    </Link>
+                    <span className="text-xs">Progress</span>
+                </div>
+                <div className="flex flex-col items-center">
+                    <Link to="/settings" className="hover:text-gray-300">
+                        <ChartBarIcon className="h-6 w-6" /> {/* Settings */}
+                    </Link>
+                    <span className="text-xs">Settings</span>
                 </div>
             </div>
-            {/* You can add more elements here if needed */}
         </div>
     );
 }
