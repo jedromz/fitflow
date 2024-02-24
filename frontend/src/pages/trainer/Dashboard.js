@@ -9,10 +9,10 @@ export default function Dashboard(id) {
             <Appbar/>
             <div className="overflow-x-auto w-full">
                 <div className="grid grid-cols-3 gap-20 ml-5">
-                    <NumberTile number="1" label="Mentorships" to="/page1"/>
+                    <NumberTile number="1" label="Mentorships" to="/trainer/123/mentorships"/>
                     <IconTile icon="🏠" label="Home" to="/home"/>
                     <IconTile icon="👤" label="Trainees" to="/trainer/123/trainees"/>
-                    <IconTile icon="✉️" label="Reports" to="/messages"/>
+                    <IconTile icon="✉️" label="Reports" to="/trainer/123/reports"/>
                     <IconTile icon="⚙️" label="Workouts" to="/settings"/>
                     <IconTile icon="ℹ️" label="Exercises" to="/exercises"/>
                 </div>
