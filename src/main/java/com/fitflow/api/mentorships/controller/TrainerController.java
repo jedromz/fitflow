@@ -25,7 +25,7 @@ public class TrainerController {
     }
 
     @GetMapping("/{trainerId}/trainees")
-    public List<Trainee> getTrainees(@PathVariable long trainerId) {
+    public List<TraineeResponse> getTrainees(@PathVariable long trainerId) {
         return mentorshipService.findTrainersTrainees(trainerId).stream()
                 .toList();
     }

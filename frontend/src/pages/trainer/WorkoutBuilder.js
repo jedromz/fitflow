@@ -71,8 +71,48 @@ const WorkoutBuilder = () => {
     };
 
     const savePlan = () => {
-        console.log('Saving plan:', { planName, selectedTrainee, plan });
+        // Construct the workout plan data
+        const workoutPlanData = {
+            name: planName,
+            description: "Generated from React App", // Add a description if needed or modify as necessary
+            fromDate: "2024-01-01", // Set these dates as required
+            toDate: "2024-12-31", // Set these dates as required
+            traineeId: 1,
+            trainerId: 1, // Set this based on your application's logic or selection
+            workouts: Object.entries(plan).map(([day, exercises]) => ({
+                name: day,
+                exercises: exercises.map(ex => ({
+                    name: ex.name,
+                    sets: ex.sets,
+                    reps: ex.reps
+                }))
+            }))
+        };
+
+        // Send the data to your backend
+        fetch('/workoutplans', { // Change the URL as needed
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(workoutPlanData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Here you can handle the UI response, like showing a success message
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Here you can handle the UI response, like showing an error message
+            });
     };
+
 
     return (
         <div className="flex flex-col gap-4 p-5" >

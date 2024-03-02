@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
-
-// Sample reports data
-const reportsData = [
-    {
-        id: 1,
-        date: '2024-02-22',
-        title: 'Report 1',
-        content: 'This is the content of report 1. It could be very long, like an email.',
-    },
-    {
-        id: 2,
-        date: '2024-02-23',
-        title: 'Report 2',
-        content: 'This is the content of report 2. It includes detailed analysis and findings.',
-    },
-    // Add more reports as needed
-];
+import React, { useState, useEffect } from 'react';
+import Appbar from "./Appbar";
 
 export default function Reports() {
+    const [reports, setReports] = useState([]);
     const [selectedReport, setSelectedReport] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    useEffect(() => {
+        // Replace 'your-endpoint-url' with the actual endpoint URL
+        fetch('/trainer/1/reports')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setReports(data); // Assuming the data is an array of reports
+            })
+            .catch(error => {
+                console.error('There was a problem fetching the reports:', error);
+            });
+    }, []); // The empty array ensures this effect runs once after initial render
+
     const handleReportClick = (reportId) => {
-        setSelectedReport(reportsData.find(report => report.id === reportId));
+        setSelectedReport(reports.find(report => report.id === reportId));
         setIsModalOpen(true);
     };
 
@@ -39,13 +41,15 @@ export default function Reports() {
                     <tr>
                         <th scope="col" className="py-3 px-6">Date</th>
                         <th scope="col" className="py-3 px-6">Title</th>
+                        <th scope="col" className="py-3 px-6">Content</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {reportsData.map((report) => (
+                    {reports.map((report) => (
                         <tr key={report.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 cursor-pointer" onClick={() => handleReportClick(report.id)}>
                             <td className="py-4 px-6">{report.date}</td>
                             <td className="py-4 px-6">{report.title}</td>
+                            <td className="py-4 px-6">{report.content}</td>
                         </tr>
                     ))}
                     </tbody>

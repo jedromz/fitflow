@@ -1,6 +1,7 @@
 package com.fitflow.api.mentorships.service;
 
 import com.fitflow.api.mentorships.controller.MentorshipResponse;
+import com.fitflow.api.mentorships.controller.TraineeResponse;
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
 import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.repository.MentorshipRepository;
@@ -38,7 +39,7 @@ public class MentorshipService {
         return mentorshipRepository.findAllByTrainerId(trainerId);
     }
 
-    public List<Trainee> findTrainersTrainees(long trainerId) {
+    public List<TraineeResponse> findTrainersTrainees(long trainerId) {
         var trainer = trainerRepository.findById(trainerId)
                 .orElseThrow(() -> new RuntimeException("Trainer not found"));
         return traineeRepository.findByTrainer(trainer);

@@ -13,6 +13,7 @@ public class CreateMentorshipRequestToMentorshipConverter implements Converter<C
         Mentorship mentorship = new Mentorship();
         mentorship.setFromDate(source.getFromDate());
         mentorship.setToDate(source.getFromDate());
+        mentorship.setPrice(source.getPrice());
         return mentorship;
     }
 }

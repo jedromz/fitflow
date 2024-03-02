@@ -6,7 +6,6 @@ import MentorshipsList from "./pages/trainer/MentorshipsList";
 import Exercises from "./pages/trainer/Exercises";
 import Reports from "./pages/trainer/Reports";
 import WorkoutBuilder from "./pages/trainer/WorkoutBuilder";
-import axios from "axios";
 import WorkoutsList from "./pages/trainer/WorkoutsList";
 
 export default function App() {

@@ -25,7 +25,7 @@ public class MentorshipController {
     }
 
     @PostMapping
-    public Mentorship addMentorship(@RequestBody CreateMentorshipRequest mentorship) {
-        return mentorshipService.createMentorship(mentorship);
+    public MentorshipResponse addMentorship(@RequestBody CreateMentorshipRequest mentorship) {
+        return modelMapper.map(mentorshipService.createMentorship(mentorship), DefaultMentorshipResponse.class);
     }
 }
