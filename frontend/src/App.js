@@ -6,10 +6,31 @@ import MentorshipsList from "./pages/trainer/MentorshipsList";
 import Exercises from "./pages/trainer/Exercises";
 import Reports from "./pages/trainer/Reports";
 import WorkoutBuilder from "./pages/trainer/WorkoutBuilder";
+import axios from "axios";
 
 export default function App() {
+     const getTrainerMentorships = async (trainerId) => {
+
+         fetch(`/api/trainers/1/mentorships`)
+             .then(response => {
+                 if (!response.ok) {
+                     throw new Error('Network response was not ok');
+                 }
+                 return response.json();
+             })
+             .then(data => {
+
+             })
+             .catch(error => {
+                 console.error("There was an error fetching the mentorships: ", error);
+             });
+    };
     return (
         <div>
+            <div>
+                <p> Test Proxy</p>
+                <button onClick={getTrainerMentorships}>Get Mentorships</button>
+            </div>
             <Routes>
                 <Route path="/trainer/:trainerId/trainees" element={<TraineeList />} />
                 <Route path="/trainer/:trainerId/dashboard" element={<Dashboard />} />

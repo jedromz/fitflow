@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Appbar from "./Appbar";
 
-// Sample Mentorship Data
-const mentorships = [
-    {
-        id: 1,
-        fromDate: '2023-01-01',
-        toDate: '2023-06-01',
-        trainer: { id: 1, name: 'Jane Doe' },
-        trainee: { id: 2, name: 'John Smith' }
-    },
-    {
-        id: 2,
-        fromDate: '2023-02-15',
-        toDate: '2023-08-15',
-        trainer: { id: 2, name: 'Emily Jones' },
-        trainee: { id: 3, name: 'William Johnson' }
-    },
-    // Add more mentorships as needed
-];
-
 export default function MentorshipsList() {
+    const [mentorships, setMentorships] = useState([]);
+
+    useEffect(() => {
+        const trainerId = 1;
+        fetch(`/api/trainers/${trainerId}/mentorships`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setMentorships(data);
+            })
+            .catch(error => {
+                console.error("There was an error fetching the mentorships: ", error);
+            });
+    }, []);
+
     return (
         <div className="flex h-screen">
             <Appbar />
