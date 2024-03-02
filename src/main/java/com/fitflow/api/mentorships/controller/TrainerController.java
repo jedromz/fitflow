@@ -17,12 +17,10 @@ import java.util.List;
 public class TrainerController {
 
     private final MentorshipService mentorshipService;
-    private final ModelMapper modelMapper;
 
     @GetMapping("/{trainerId}/mentorships")
     public List<MentorshipResponse> getMentorship(@PathVariable long trainerId) {
         return mentorshipService.findTrainersMentorships(trainerId).stream()
-                .map(mentorship -> modelMapper.map(mentorship, MentorshipResponse.class))
                 .toList();
     }
 

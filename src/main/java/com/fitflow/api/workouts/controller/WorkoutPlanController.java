@@ -6,15 +6,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/workoutplans")
 @RequiredArgsConstructor
 public class WorkoutPlanController {
 
     private final WorkoutPlanService workoutPlanService;
 
-    @PostMapping
+    @PostMapping("/workoutplans")
     public ResponseEntity<WorkoutPlan> addWorkoutPlan(@RequestBody CreateWorkoutPlanCommand command) {
         return ResponseEntity.ok(workoutPlanService.addWorkoutPlan(command));
+    }
+
+    @GetMapping("/trainers/{trainerId}/workoutplans")
+    public List<WorkoutPlanResponse> getWorkoutPlans(@PathVariable long trainerId) {
+        return workoutPlanService.findTrainersWorkoutPlans(trainerId);
     }
 }

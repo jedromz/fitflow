@@ -7,8 +7,11 @@ INSERT INTO trainee (id, name, email) VALUES
     (1, 'Jane Doe', 'janedoe@example.com');
 
 -- Insert mentorships
-INSERT INTO mentorship (id, start_date, end_date, trainer_id, trainee_id) VALUES
-    (1, '2024-01-01', '2024-06-30', 1, 1);
+INSERT INTO mentorship (id, start_date, end_date,price, trainer_id, trainee_id) VALUES
+    (1, '2024-01-01', '2024-06-30',300.0, 1, 1),
+    (2, '2024-01-01', '2024-06-30',300.0, 1, 1),
+    (3, '2024-01-01', '2024-06-30',300.0, 1, 1),
+    (4, '2024-01-01', '2024-06-30',300.0, 1, 1);
 
 -- Insert workout plans
 INSERT INTO workout_plan (id, name, description, from_date, to_date, trainee_id, trainer_id) VALUES

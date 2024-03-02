@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Appbar from "./Appbar";
 
-export default function MentorshipsList() {
-    const [mentorships, setMentorships] = useState([]);
+export default function WorkoutsList() {
+    const [workouts, setWorkouts] = useState([]);
 
     useEffect(() => {
-        const trainerId = 1;
-        fetch(`/api/trainers/${trainerId}/mentorships`)
+        fetch(`/trainers/1/workoutplans`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -14,10 +13,10 @@ export default function MentorshipsList() {
                 return response.json();
             })
             .then(data => {
-                setMentorships(data);
+                setWorkouts(data);
             })
             .catch(error => {
-                console.error("There was an error fetching the mentorships: ", error);
+                console.error("There was an error fetching the workouts: ", error);
             });
     }, []);
 
@@ -29,17 +28,19 @@ export default function MentorshipsList() {
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" className="py-3 px-6">Name</th>
+                            <th scope="col" className="py-3 px-6">Description</th>
                             <th scope="col" className="py-3 px-6">Start Date</th>
                             <th scope="col" className="py-3 px-6">End Date</th>
-                            <th scope="col" className="py-3 px-6">Price</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {mentorships.map((mentorship) => (
-                            <tr key={mentorship.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td className="py-4 px-6">{mentorship.fromDate}</td>
-                                <td className="py-4 px-6">{mentorship.toDate}</td>
-                                <td className="py-4 px-6">{mentorship.price}</td>
+                        {workouts.map((workout) => (
+                            <tr key={workout.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td className="py-4 px-6">{workout.name}</td>
+                                <td className="py-4 px-6">{workout.description}</td>
+                                <td className="py-4 px-6">{workout.fromDate}</td>
+                                <td className="py-4 px-6">{workout.toDate}</td>
                             </tr>
                         ))}
                         </tbody>

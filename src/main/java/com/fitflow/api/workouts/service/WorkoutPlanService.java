@@ -3,11 +3,14 @@ package com.fitflow.api.workouts.service;
 import com.fitflow.api.mentorships.repository.TraineeRepository;
 import com.fitflow.api.mentorships.repository.TrainerRepository;
 import com.fitflow.api.workouts.controller.CreateWorkoutPlanCommand;
+import com.fitflow.api.workouts.controller.WorkoutPlanResponse;
 import com.fitflow.api.workouts.model.WorkoutPlan;
 import com.fitflow.api.workouts.repository.WorkoutPlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,9 @@ public class WorkoutPlanService {
         workoutPlan.setTrainer(trainer);
 
         return workoutPlanRepository.save(workoutPlan);
+    }
+
+    public List<WorkoutPlanResponse> findTrainersWorkoutPlans(long trainerId) {
+        return workoutPlanRepository.findAllByTrainerId(trainerId);
     }
 }

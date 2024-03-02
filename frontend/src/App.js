@@ -7,6 +7,7 @@ import Exercises from "./pages/trainer/Exercises";
 import Reports from "./pages/trainer/Reports";
 import WorkoutBuilder from "./pages/trainer/WorkoutBuilder";
 import axios from "axios";
+import WorkoutsList from "./pages/trainer/WorkoutsList";
 
 export default function App() {
      const getTrainerMentorships = async (trainerId) => {
@@ -27,14 +28,11 @@ export default function App() {
     };
     return (
         <div>
-            <div>
-                <p> Test Proxy</p>
-                <button onClick={getTrainerMentorships}>Get Mentorships</button>
-            </div>
             <Routes>
                 <Route path="/trainer/:trainerId/trainees" element={<TraineeList />} />
                 <Route path="/trainer/:trainerId/dashboard" element={<Dashboard />} />
                 <Route path="/trainer/:trainerId/mentorships" element={<MentorshipsList />} />
+                <Route path="/trainer/:trainerId/workouts" element={<WorkoutsList />} />
                 <Route path="/trainer/:trainerId/reports" element={<Reports/>} />
                 <Route path="/exercises" element={<Exercises />} />
                 <Route path="/trainer/:trainerId/builder" element={<WorkoutBuilder />} />

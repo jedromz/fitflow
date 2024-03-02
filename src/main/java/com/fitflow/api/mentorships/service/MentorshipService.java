@@ -1,5 +1,6 @@
 package com.fitflow.api.mentorships.service;
 
+import com.fitflow.api.mentorships.controller.MentorshipResponse;
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
 import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.repository.MentorshipRepository;
@@ -33,7 +34,7 @@ public class MentorshipService {
         return mentorshipRepository.save(mentorship);
     }
 
-    public List<Mentorship> findTrainersMentorships(Long trainerId) {
+    public List<MentorshipResponse> findTrainersMentorships(Long trainerId) {
         return mentorshipRepository.findAllByTrainerId(trainerId);
     }
 

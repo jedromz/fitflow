@@ -8,7 +8,7 @@ export default function Appbar() {
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col items-center">
                     <span className="text-2xl font-extrabold pb-5">Fitflow</span>
-                    <Link to="/" className="hover:text-gray-300">
+                    <Link to="/trainer/123/dashboard" className="hover:text-gray-300">
                         <HomeIcon className="h-6 w-6" />
                     </Link>
                     <span className="text-xs">Home</span>
