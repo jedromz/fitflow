@@ -9,27 +9,11 @@ import WorkoutBuilder from "./pages/trainer/WorkoutBuilder";
 import WorkoutsList from "./pages/trainer/WorkoutsList";
 
 export default function App() {
-     const getTrainerMentorships = async (trainerId) => {
-
-         fetch(`/api/trainers/1/mentorships`)
-             .then(response => {
-                 if (!response.ok) {
-                     throw new Error('Network response was not ok');
-                 }
-                 return response.json();
-             })
-             .then(data => {
-
-             })
-             .catch(error => {
-                 console.error("There was an error fetching the mentorships: ", error);
-             });
-    };
     return (
         <div>
             <Routes>
                 <Route path="/trainer/:trainerId/trainees" element={<TraineeList />} />
-                <Route path="/trainer/:trainerId/dashboard" element={<Dashboard />} />
+                <Route path="/trainer/:trainerId/dashboard" element={<Dashboard id={1} />} />
                 <Route path="/trainer/:trainerId/mentorships" element={<MentorshipsList />} />
                 <Route path="/trainer/:trainerId/workouts" element={<WorkoutsList />} />
                 <Route path="/trainer/:trainerId/reports" element={<Reports/>} />
@@ -39,4 +23,3 @@ export default function App() {
         </div>
     );
 }
-

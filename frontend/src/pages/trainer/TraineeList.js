@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'; // Ensure useParams is imported
 import Appbar from "./Appbar";
 
 export default function TraineeList() {
     const [trainees, setTrainees] = useState([]);
+    const { trainerId } = useParams(); // Retrieve the trainerId from the URL
+    const { id } = useParams(); // Retrieve the trainerId from the URL
 
     useEffect(() => {
-        // Replace 'your-endpoint-url' with the actual endpoint URL
-        fetch('/api/trainers/1/trainees')
+        console.log(trainerId)
+        console.log(id)
+        // Fetch trainees for the trainer using the trainerId from the URL
+        fetch(`/api/trainers/${trainerId}/trainees`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -19,7 +24,7 @@ export default function TraineeList() {
             .catch(error => {
                 console.error("There was an error fetching the trainees: ", error);
             });
-    }, []); // The empty array ensures this effect runs once after initial render
+    }, [trainerId]); // Dependency on trainerId to rerun the effect when the trainerId changes
 
     return (
         <div className='flex'>

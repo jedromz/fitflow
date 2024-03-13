@@ -1,9 +1,8 @@
 package com.fitflow.api.mentorships.service;
 
-import com.fitflow.api.mentorships.controller.MentorshipResponse;
+import com.fitflow.api.mentorships.dto.MentorshipResponse;
 import com.fitflow.api.mentorships.controller.TraineeResponse;
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
-import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.repository.MentorshipRepository;
 import com.fitflow.api.mentorships.model.Mentorship;
 import com.fitflow.api.mentorships.repository.TraineeRepository;
@@ -12,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service

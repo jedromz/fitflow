@@ -1,9 +1,10 @@
 package com.fitflow.api.mentorships.controller;
 
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
+import com.fitflow.api.mentorships.dto.DefaultMentorshipResponse;
+import com.fitflow.api.mentorships.dto.MentorshipResponse;
 import com.fitflow.api.mentorships.repository.MentorshipRepository;
 import com.fitflow.api.mentorships.service.MentorshipService;
-import com.fitflow.api.mentorships.model.Mentorship;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Appbar from "./Appbar";
+import {useParams} from 'react-router-dom';
 
 export default function WorkoutsList() {
     const [workouts, setWorkouts] = useState([]);
-
+    const {trainerId} = useParams();
     useEffect(() => {
-        fetch(`/trainers/1/workoutplans`)
+        fetch(`/trainers/${trainerId}/workoutplans`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -18,15 +19,16 @@ export default function WorkoutsList() {
             .catch(error => {
                 console.error("There was an error fetching the workouts: ", error);
             });
-    }, []);
+    }, [trainerId]);
 
     return (
         <div className="flex h-screen">
-            <Appbar />
+            <Appbar/>
             <div className="overflow-x-auto w-full">
                 <div className="shadow-md sm:rounded-lg m-5 flex-grow">
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="py-3 px-6">Name</th>
                             <th scope="col" className="py-3 px-6">Description</th>

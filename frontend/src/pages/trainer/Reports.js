@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Appbar from "./Appbar";
-
+import {useParams } from 'react-router-dom';
 export default function Reports() {
     const [reports, setReports] = useState([]);
     const [selectedReport, setSelectedReport] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {trainerId} = useParams();
 
     useEffect(() => {
         // Replace 'your-endpoint-url' with the actual endpoint URL
-        fetch('/trainer/1/reports')
+        fetch(`/trainer/${trainerId}/reports`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -21,7 +21,7 @@ export default function Reports() {
             .catch(error => {
                 console.error('There was a problem fetching the reports:', error);
             });
-    }, []); // The empty array ensures this effect runs once after initial render
+    }, [trainerId]); // The empty array ensures this effect runs once after initial render
 
     const handleReportClick = (reportId) => {
         setSelectedReport(reports.find(report => report.id === reportId));

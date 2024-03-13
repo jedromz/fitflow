@@ -1,27 +1,19 @@
-package com.fitflow.api.mentorships.controller;
+package com.fitflow.api.mentorships.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-
-public interface MentorshipResponse {
-    LocalDate getFromDate();
-
-    LocalDate getToDate();
-
-    BigDecimal getPrice();
-}
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-class DefaultMentorshipResponse implements MentorshipResponse {
+public class DefaultMentorshipResponse extends RepresentationModel<DefaultMentorshipResponse> implements MentorshipResponse {
     private LocalDate fromDate;
     private LocalDate toDate;
     private BigDecimal price;
@@ -39,6 +31,3 @@ class DefaultMentorshipResponse implements MentorshipResponse {
         return price;
     }
 }
-
-
-
