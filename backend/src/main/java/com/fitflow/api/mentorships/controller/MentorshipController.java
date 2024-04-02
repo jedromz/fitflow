@@ -22,7 +22,10 @@ public class MentorshipController {
 
     @GetMapping
     public List<MentorshipResponse> getMentorship() {
-        return mentorshipRepository.findAllBy();
+        return mentorshipRepository.findAll()
+                .stream()
+                .map(mentorship -> modelMapper.map(mentorship, MentorshipResponse.class))
+                .toList();
     }
 
     @PostMapping

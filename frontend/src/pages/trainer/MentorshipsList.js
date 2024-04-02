@@ -5,14 +5,17 @@ import {useParams} from 'react-router-dom';
 export default function MentorshipsList() {
     const [mentorships, setMentorships] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    // Updated to use form values from `newMentorship` state
     const [newMentorship, setNewMentorship] = useState({
         startDate: '',
         endDate: '',
         price: 0,
         trainee: '',
+        email: '',
     });
     const [trainees, setTrainees] = useState([]);
     const {trainerId} = useParams();
+
 
     useEffect(() => {
         const trainerId = 1;
@@ -43,11 +46,11 @@ export default function MentorshipsList() {
         event.preventDefault();
 
         const mentorshipData = {
-            traineeId: 1,
+            traineeEmail: newMentorship.email,
             trainerId: 1,
             fromDate: newMentorship.startDate,
             toDate: newMentorship.endDate,
-            price: 300,
+            price: newMentorship.price,
         };
 
         try {
@@ -68,19 +71,15 @@ export default function MentorshipsList() {
 
             setShowModal(false);
             setMentorships([...mentorships, result]);
-            setNewMentorship({
-                startDate: '',
-                endDate: '',
-                price: 0,
-                trainee: ''
-            });
         } catch (error) {
             console.error('Error during mentorship creation:', error);
         }
     };
 
     const handleChange = (event) => {
-        setNewMentorship({...newMentorship, [event.target.name]: event.target.value});
+        const {name, value} = event.target;
+        setNewMentorship(prevState => ({...prevState, [name]: value}));
+        console.log(newMentorship)
     };
 
     return (
@@ -113,8 +112,7 @@ export default function MentorshipsList() {
                                 <td className="py-4 px-6">{mentorship.fromDate}</td>
                                 <td className="py-4 px-6">{mentorship.toDate}</td>
                                 <td className="py-4 px-6">{mentorship.price}</td>
-                                <td className="py-4 px-6">Dummy</td>
-                                {/* Adjust according to your data structure */}
+                                <td className="py-4 px-6">{mentorship.trainee_Name}</td>
                             </tr>
                         ))}
                         </tbody>
@@ -153,14 +151,14 @@ export default function MentorshipsList() {
                                 />
                                 <select
                                     className="mt-2 p-2 w-full border rounded-md"
-                                    name="trainee"
-                                    value={newMentorship.trainee}
+                                    name="email" // Make sure this matches the state's property
+                                    value={newMentorship.traineeId} // Use traineeId from the state
                                     onChange={handleChange}
                                     required
                                 >
                                     <option value="">Select Trainee</option>
                                     {trainees.map((trainee) => (
-                                        <option key={trainee.id} value={trainee.id}>
+                                        <option key={trainee.id} value={trainee.email}>
                                             {trainee.name}
                                         </option>
                                     ))}

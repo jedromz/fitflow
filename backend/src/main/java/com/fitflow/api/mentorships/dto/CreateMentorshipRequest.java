@@ -16,6 +16,6 @@ public class CreateMentorshipRequest {
     private LocalDate fromDate;
     private LocalDate toDate;
     private Long trainerId;
-    private Long traineeId;
     private BigDecimal price;
+    private String traineeEmail;
 }

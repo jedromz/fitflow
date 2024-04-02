@@ -1,10 +1,10 @@
 package com.fitflow.api.mentorships.service;
 
-import com.fitflow.api.mentorships.dto.MentorshipResponse;
 import com.fitflow.api.mentorships.controller.TraineeResponse;
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
-import com.fitflow.api.mentorships.repository.MentorshipRepository;
+import com.fitflow.api.mentorships.dto.MentorshipResponse;
 import com.fitflow.api.mentorships.model.Mentorship;
+import com.fitflow.api.mentorships.repository.MentorshipRepository;
 import com.fitflow.api.mentorships.repository.TraineeRepository;
 import com.fitflow.api.mentorships.repository.TrainerRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class MentorshipService {
     public Mentorship createMentorship(CreateMentorshipRequest mentorshipRequest) {
         final var trainer = trainerRepository.findById(mentorshipRequest.getTrainerId())
                 .orElseThrow(() -> new RuntimeException("Trainer not found"));
-        final var trainee = traineeRepository.findById(mentorshipRequest.getTraineeId())
+        final var trainee = traineeRepository.findByEmail(mentorshipRequest.getTraineeEmail())
                 .orElseThrow(() -> new RuntimeException("Trainee not found"));
         final var mentorship = modelMapper.map(mentorshipRequest, Mentorship.class);
         mentorship.setTrainer(trainer);
@@ -42,4 +42,5 @@ public class MentorshipService {
                 .orElseThrow(() -> new RuntimeException("Trainer not found"));
         return traineeRepository.findByTrainer(trainer);
     }
+
 }

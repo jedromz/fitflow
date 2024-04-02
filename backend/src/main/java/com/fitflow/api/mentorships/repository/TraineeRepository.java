@@ -17,5 +17,7 @@ public interface TraineeRepository extends JpaRepository<Trainee, Long> {
 
 
     Optional<TraineeResponse> findById(long traineeId, Class<TraineeResponse> clazz);
+
+    Optional<Trainee> findByEmail(String traineeEmail);
 }
 
