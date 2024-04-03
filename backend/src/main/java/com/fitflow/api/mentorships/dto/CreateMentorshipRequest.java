@@ -18,4 +18,6 @@ public class CreateMentorshipRequest {
     private Long trainerId;
     private BigDecimal price;
     private String traineeEmail;
+    private String traineeName;
+    private String type;
 }

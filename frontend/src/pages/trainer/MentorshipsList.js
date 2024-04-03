@@ -10,8 +10,10 @@ export default function MentorshipsList() {
         startDate: '',
         endDate: '',
         price: 0,
-        trainee: '',
+        traineeName: '',
         email: '',
+        name: '',
+        type: ''
     });
     const [trainees, setTrainees] = useState([]);
     const {trainerId} = useParams();
@@ -51,6 +53,8 @@ export default function MentorshipsList() {
             fromDate: newMentorship.startDate,
             toDate: newMentorship.endDate,
             price: newMentorship.price,
+            type: newMentorship.type,
+            traineeName: newMentorship.traineeName,
         };
 
         try {
@@ -81,6 +85,22 @@ export default function MentorshipsList() {
         setNewMentorship(prevState => ({...prevState, [name]: value}));
         console.log(newMentorship)
     };
+    const handleSelectTrainee = (event) => {
+        setNewMentorship(prevState => ({
+            ...prevState,
+            traineeId: event.target.value,
+            traineeSource: 'existing_trainee'
+        }));
+        console.log(newMentorship)
+    };
+
+// When adding a new trainee not from the dropdown (implying self-entry)
+    const handleNewTraineeEntry = (event) => {
+        const {name, value} = event.target;
+        setNewMentorship(prevState => ({...prevState, [name]: value, traineeSource: 'new_trainee '}));
+        console.log(newMentorship)
+    };
+
 
     return (
         <div className="flex h-screen">
@@ -153,8 +173,8 @@ export default function MentorshipsList() {
                                     className="mt-2 p-2 w-full border rounded-md"
                                     name="email" // Make sure this matches the state's property
                                     value={newMentorship.traineeId} // Use traineeId from the state
-                                    onChange={handleChange}
-                                    required
+                                    onChange={handleSelectTrainee}
+
                                 >
                                     <option value="">Select Trainee</option>
                                     {trainees.map((trainee) => (
@@ -163,6 +183,23 @@ export default function MentorshipsList() {
                                         </option>
                                     ))}
                                 </select>
+                                {/* Instead of selecting an existing Trainee we casn add a new one */}
+                                <input
+                                    className="mt-2 p-2 w-full border rounded-md"
+                                    name="traineeName"
+                                    type="text"
+                                    value={newMentorship.traineeName}
+                                    onChange={handleNewTraineeEntry}
+                                    required
+                                />
+                                <input
+                                    className="mt-2 p-2 w-full border rounded-md"
+                                    name="email"
+                                    type="email"
+                                    value={newMentorship.email}
+                                    onChange={handleNewTraineeEntry}
+                                />
+
                                 <div className="items-center px-4 py-3">
                                     <button
                                         className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
