@@ -3,17 +3,15 @@ package com.fitflow.api.mentorships.model;
 import com.fitflow.api.base.BaseEntity;
 import com.fitflow.api.reports.Report;
 import com.fitflow.api.workouts.model.WorkoutPlan;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @AllArgsConstructor
@@ -22,6 +20,7 @@ import java.util.List;
 @Setter
 public class Trainee extends BaseEntity {
     private String name;
+    @Column(unique = true)
     private String email;
     @OneToMany(mappedBy = "trainee")
     private List<Mentorship> mentorships = new ArrayList<>();
@@ -35,5 +34,18 @@ public class Trainee extends BaseEntity {
                 .min(Comparator.comparing(Mentorship::getFromDate))
                 .map(Mentorship::getTrainer)
                 .orElseThrow();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Trainee trainee = (Trainee) o;
+        return Objects.equals(name, trainee.name) && Objects.equals(email, trainee.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, email);
     }
 }

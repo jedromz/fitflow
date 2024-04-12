@@ -12,9 +12,8 @@ import java.util.Optional;
 public interface TraineeRepository extends JpaRepository<Trainee, Long> {
 
 
-    @Query("select t from Trainee t inner join t.mentorships mentorships where mentorships.trainer = ?1")
+    @Query("select distinct t from Trainee t inner join t.mentorships mentorships where mentorships.trainer = ?1")
     List<TraineeResponse> findByTrainer(Trainer trainer);
-
 
     Optional<TraineeResponse> findById(long traineeId, Class<TraineeResponse> clazz);
 

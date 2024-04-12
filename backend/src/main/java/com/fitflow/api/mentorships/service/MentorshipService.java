@@ -54,6 +54,9 @@ public class MentorshipService {
     public List<TraineeResponse> findTrainersTrainees(long trainerId) {
         var trainer = trainerRepository.findById(trainerId)
                 .orElseThrow(() -> new RuntimeException("Trainer not found"));
-        return traineeRepository.findByTrainer(trainer);
+        return traineeRepository.findByTrainer(trainer)
+                .stream()
+                .distinct()
+                .toList();
     }
 }
