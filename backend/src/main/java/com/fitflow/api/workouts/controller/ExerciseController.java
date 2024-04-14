@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-@RequiredArgsConstructor
 @RestController
 public class ExerciseController {
 
     private final ExerciseRepository exerciseRepository;
+
+    public ExerciseController(ExerciseRepository exerciseRepository) {
+        this.exerciseRepository = exerciseRepository;
+    }
+
     @GetMapping("/exercises")
     public List<Exercise> getExercises() {
         return exerciseRepository.findAll();

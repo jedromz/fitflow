@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/trainees")
-@RequiredArgsConstructor
 public class TraineeController {
 
     private final TraineeRepository traineeRepository;
+
+    public TraineeController(TraineeRepository traineeRepository) {
+        this.traineeRepository = traineeRepository;
+    }
+
     @GetMapping("/{traineeId}")
     public TraineeResponse get(@PathVariable long traineeId) {
         return traineeRepository.findById(traineeId, TraineeResponse.class)

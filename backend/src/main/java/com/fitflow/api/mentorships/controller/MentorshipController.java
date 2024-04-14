@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/mentorships")
 public class MentorshipController {
 
     private final MentorshipRepository mentorshipRepository;
     private final MentorshipService mentorshipService;
     private final ModelMapper modelMapper;
+
+    public MentorshipController(MentorshipRepository mentorshipRepository, MentorshipService mentorshipService, ModelMapper modelMapper) {
+        this.mentorshipRepository = mentorshipRepository;
+        this.mentorshipService = mentorshipService;
+        this.modelMapper = modelMapper;
+    }
 
     @GetMapping
     public List<MentorshipResponse> getMentorship() {

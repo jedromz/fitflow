@@ -23,7 +23,7 @@ public class WorkoutPlanService {
 
 
     public WorkoutPlan addWorkoutPlan(CreateWorkoutPlanCommand createWorkoutPlanCommand) {
-        final var trainee = traineeRepository.findById(createWorkoutPlanCommand.getTraineeId())
+        final var trainee = traineeRepository.findByEmail(createWorkoutPlanCommand.getTraineeEmail())
                 .orElseThrow(() -> new RuntimeException("Trainee not found"));
         final var trainer = trainerRepository.findById(createWorkoutPlanCommand.getTrainerId())
                 .orElseThrow(() -> new RuntimeException("Trainer not found"));

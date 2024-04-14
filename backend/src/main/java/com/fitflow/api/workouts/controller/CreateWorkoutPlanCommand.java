@@ -18,8 +18,8 @@ public class CreateWorkoutPlanCommand {
     private String description;
     private LocalDate fromDate;
     private LocalDate toDate;
-    private Long traineeId;
     private Long trainerId;
+    private String traineeEmail;
     private List<WorkoutDto> workouts;
 
     @AllArgsConstructor

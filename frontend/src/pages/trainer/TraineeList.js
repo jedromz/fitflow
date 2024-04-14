@@ -32,16 +32,7 @@ export default function TraineeList() {
             <Appbar/>
             <div className="overflow-x-auto w-full">
                 <div className="overflow-x-auto relative shadow-md sm:rounded-lg m-5">
-                    <div className="flex justify-between items-center p-5">
-                        <h2 className="text-lg font-medium">Trainees</h2>
-                        <button
-                            onClick={() => setShowModal(true)}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        >
 
-                            Add New Trainee
-                        </button>
-                    </div>
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead
                             className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

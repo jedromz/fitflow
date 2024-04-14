@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState,useEffect } from 'react';
+import {useParams} from 'react-router-dom';
 // Initial workout items
 const initialWorkouts = [
     { id: 1, name: 'Push-ups' },
@@ -10,18 +10,48 @@ const initialWorkouts = [
 ];
 
 // Assuming a predefined list of trainees
-const trainees = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' }
-];
-
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const WorkoutBuilder = () => {
+    const [exercises,setExercises] = useState([])
     const [availableWorkouts, setAvailableWorkouts] = useState(initialWorkouts);
     const [plan, setPlan] = useState(days.reduce((acc, day) => ({ ...acc, [day]: [] }), {}));
     const [planName, setPlanName] = useState('');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [description, setDescription] = useState('');
     const [selectedTrainee, setSelectedTrainee] = useState('');
+    const [trainees, setTrainees] = useState([]);
+    const {trainerId} = useParams();
+    useEffect(() => {
+    fetch(`/exercises`) // Corrected endpoint for fetching exercises
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => setExercises(data))
+            .catch(error => console.error("There was an error fetching the workouts: ", error));
+        const trainerId = 1;
+        fetch(`/api/trainers/${trainerId}/mentorships`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+            })
+            .catch(error => {
+                console.error("There was an error fetching the mentorships: ", error);
+            });
+        fetch(`/api/trainers/${trainerId}/trainees`) // Adjust this endpoint as necessary
+            .then(response => response.json())
+            .then(data => setTrainees(data))
+            .catch(error => console.error("There was an error fetching the trainees: ", error));
+    }, [trainerId]);
 
     const onDragStart = (e, item, origin, day = null) => {
         const dragData = { item, origin, day };
@@ -49,10 +79,24 @@ const WorkoutBuilder = () => {
     const handlePlanNameChange = (e) => {
         setPlanName(e.target.value);
     };
+    const handleFromDateChange = (e) => {
+            setFromDate(e.target.value);
+        };
+        const handleToDateChange = (e) => {
+                setToDate(e.target.value);
+            };
+    const handleDescriptionChange = (e) => {
+            setDescription(e.target.value);
+        };
 
     const handleTraineeChange = (e) => {
+    console.log(trainees)
+        console.log('Selected value:', e.target.value); // Should log the id
+        console.log('All options:', e.target.options); // See all options in the dropdown
+
         setSelectedTrainee(e.target.value);
     };
+
 
     const handleExerciseChange = (day, id, field, value) => {
         setPlan((current) => ({
@@ -69,16 +113,22 @@ const WorkoutBuilder = () => {
             [day]: current[day].filter((exercise) => exercise.id !== id)
         }));
     };
+    const clearPlan = () => {
+           setPlan(days.reduce((acc, day) => ({ ...acc, [day]: [] }), {}));
+       };
 
     const savePlan = () => {
+
+    console.log(trainerId)
+    console.log(selectedTrainee)
         // Construct the workout plan data
         const workoutPlanData = {
             name: planName,
-            description: "Generated from React App", // Add a description if needed or modify as necessary
-            fromDate: "2024-01-01", // Set these dates as required
-            toDate: "2024-12-31", // Set these dates as required
-            traineeId: 1,
-            trainerId: 1, // Set this based on your application's logic or selection
+            description: description, // Add a description if needed or modify as necessary
+            fromDate: fromDate, // Set these dates as required
+            toDate: toDate, // Set these dates as required
+            trainerId: trainerId,
+            traineeEmail: selectedTrainee, // Set this based on your application's logic or selection
             workouts: Object.entries(plan).map(([day, exercises]) => ({
                 name: day,
                 exercises: exercises.map(ex => ({
@@ -124,21 +174,45 @@ const WorkoutBuilder = () => {
                     onChange={handlePlanNameChange}
                     className="p-2 border rounded"
                 />
+                <input
+                                    type="text"
+                                    placeholder="Description"
+                                    value={description}
+                                    onChange={handleDescriptionChange}
+                                    className="p-2 border rounded"
+                                />
+                                <input
+                                    type="date"
+                                    placeholder="From Date"
+                                    value={fromDate}
+                                    onChange={handleFromDateChange}
+                                    className="p-2 border rounded"
+                                />
+                                <input
+                                    type="date"
+                                    placeholder="To Date"
+                                    value={toDate}
+                                    onChange={handleToDateChange}
+                                    className="p-2 border rounded"
+                                />
                 <select
-                    value={selectedTrainee}
-                    onChange={handleTraineeChange}
-                    className="p-2 border rounded"
-                >
-                    <option value="">Select Trainee</option>
-                    {trainees.map((trainee) => (
-                        <option key={trainee.id} value={trainee.id}>
-                            {trainee.name}
-                        </option>
-                    ))}
-                </select>
+                       value={selectedTrainee}
+                       onChange={handleTraineeChange}
+                       className="p-2 border rounded"
+                   >
+                       <option value="">Select Trainee</option>
+                       {trainees.map((trainee) => (
+                           <option key={trainee.email} value={trainee.email}>
+                               {trainee.name}
+                           </option>
+                       ))}
+                   </select>
                 <button onClick={savePlan} className="p-2 bg-blue-500 text-white rounded">
                     Save Plan
                 </button>
+                <button onClick={clearPlan} className="p-2 bg-blue-500 text-white rounded">
+                                    Clear
+                                </button>
             </div>
             <div className="flex gap-4">
                 <div
