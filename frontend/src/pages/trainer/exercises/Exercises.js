@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Appbar from "./Appbar";
+import NumberTile from '../components/NumberTile'
+import IconTile from '../components/IconTile'
+import Appbar  from '../components/Appbar'
+
 
 export default function Exercises() {
     const [exercises, setExercises] = useState([]);

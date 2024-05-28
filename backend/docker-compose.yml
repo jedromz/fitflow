@@ -32,14 +32,17 @@ services:
 
   minio:
     image: minio/minio
-    command: server /data
+    command: server /minio-image/storage --console-address :9001
     ports:
       - "9000:9000"
+      - "9001:9001"
+      - "37031:37031"
     environment:
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
     volumes:
       - minio_data:/data
+
 
 volumes:
   minio_data:

@@ -12,6 +12,8 @@ INSERT INTO trainee (id, name, email) VALUES
 -- Insert mentorships
 INSERT INTO mentorship (id, start_date, end_date,price, trainer_id, trainee_id) VALUES
     (1000, '2024-01-01', '2024-06-30',300.0, 1, 1),
+     (1001, '2025-01-01', '2025-06-30',300.0, 1, 1),
+     (1002, '2024-05-05', '2025-10-30',300.0, 1, 1),
     (2000, '2024-01-01', '2024-06-30',300.0, 1, 2),
     (3000, '2024-01-01', '2024-06-30',300.0, 1, 3),
     (4000, '2024-01-01', '2024-06-30',300.0, 1, 4);
@@ -36,7 +38,12 @@ INSERT INTO workout_exercise (id, workout_id, exercise_id, sets, reps) VALUES
                                                                            (2000, 1000, 2000, 3000, 15); -- Linking Squats to Workout 1 with 3 sets of 15 reps
 
 INSERT INTO report (id, date, trainee_id, trainer_id,title,content) VALUES
-    (1, '2024-01-02', 1,  1, 'Report 1','Content 1'),
-    (2, '2024-01-03', 1,  1, 'Report 2','Content 2'),
-    (3, '2024-01-04', 1,  1,'Report 3','Content 3'),
-    (4, '2024-01-05', 1,  1, 'Report 4','Content 4');
+    (1000, '2024-01-02', 1,  1, 'Report 1','Content 1'),
+    (2000, '2024-01-03', 1,  1, 'Report 2','Content 2'),
+    (3000, '2024-01-04', 1,  1,'Report 3','Content 3'),
+    (4000, '2024-01-05', 1,  1, 'Report 4','Content 4');
+
+ --Insert into measurements
+
+ INSERT INTO measurement_record (id,body_part, measurement_value, unit, date, trainee_id)
+ VALUES (1,'ABS', 10.5, 'CM', '2024-05-24', 1);

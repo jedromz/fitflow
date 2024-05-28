@@ -1,20 +1,14 @@
 import React, { useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 // Initial workout items
-const initialWorkouts = [
-    { id: 1, name: 'Push-ups' },
-    { id: 2, name: 'Pull-ups' },
-    { id: 3, name: 'Squats' },
-    { id: 4, name: 'Lunges' },
-    { id: 5, name: 'Planks' }
-];
+
 
 // Assuming a predefined list of trainees
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const WorkoutBuilder = () => {
     const [exercises,setExercises] = useState([])
-    const [availableWorkouts, setAvailableWorkouts] = useState(initialWorkouts);
+    const [availableWorkouts, setAvailableWorkouts] = useState([]);
     const [plan, setPlan] = useState(days.reduce((acc, day) => ({ ...acc, [day]: [] }), {}));
     const [planName, setPlanName] = useState('');
     const [fromDate, setFromDate] = useState('');
@@ -221,7 +215,7 @@ const WorkoutBuilder = () => {
                 >
                     <h2 className="text-lg font-bold mb-4">Available Exercises</h2>
                     <ul className="space-y-2">
-                        {availableWorkouts.map((item) => (
+                        {exercises.map((item) => (
                             <li
                                 key={item.id}
                                 draggable

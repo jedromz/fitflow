@@ -1,9 +1,9 @@
 import React from 'react';
-import NumberTile from './NumberTile';
-import IconTile from './IconTile';
-import Appbar from './Appbar';
+import NumberTile from '../components/NumberTile'
+import IconTile from '../components/IconTile'
+import Appbar  from '../components/Appbar'
 
-export default function Dashboard({ id }) { // Destructure id from props
+export default function Dashboard({ id }) {
     return (
         <div className='flex h-screen'>
             <Appbar/>

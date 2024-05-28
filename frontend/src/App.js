@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import TraineeList from './pages/trainer/TraineeList';
-import Dashboard from "./pages/trainer/Dashboard";
-import MentorshipsList from "./pages/trainer/MentorshipsList";
-import Exercises from "./pages/trainer/Exercises";
-import Reports from "./pages/trainer/Reports";
-import WorkoutBuilder from "./pages/trainer/WorkoutBuilder";
-import WorkoutsList from "./pages/trainer/WorkoutsList";
+import TraineeList from './pages/trainer/trainees/TraineeList'
+import Dashboard from './pages/trainer/dashboard/Dashboard'
+import MentorshipsList from './pages/trainer/mentorships/MentorshipsList'
+import WorkoutsList from './pages/trainer/workouts/WorkoutsList'
+import Exercises from './pages/trainer/exercises/Exercises'
+import Reports from './pages/trainer/reports/Reports'
+import WorkoutBuilder from './pages/trainer/workouts/WorkoutBuilder'
+import TraineeDashboard from './pages/trainee/TraineeDashboard';
+import TraineesMeasurements from './pages/trainee/TraineeMeasurements';
+import TraineeWorkoutsList from './pages/trainee/TraineeWorkouts';
+import TraineeReports from './pages/trainee/TraineeReports';
 
 export default function App() {
     return (
@@ -19,6 +23,11 @@ export default function App() {
                 <Route path="/trainer/:trainerId/reports" element={<Reports/>} />
                 <Route path="/exercises" element={<Exercises />} />
                 <Route path="/trainer/:trainerId/builder" element={<WorkoutBuilder />} />
+                
+                <Route path="/trainee/:traineeId/dashboard" element={<TraineeDashboard id={1} />} />
+                <Route path="/trainee/:traineeId/measurements" element={<TraineesMeasurements id={1} />} />
+                <Route path="/trainee/:traineeId/workoutplans" element={<TraineeWorkoutsList id={1} />} />
+                <Route path="/trainee/:traineeId/reports" element={<TraineeReports id={1} />} />
             </Routes>
         </div>
     );

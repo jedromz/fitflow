@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import Appbar from "./Appbar";
 import {useParams} from 'react-router-dom';
+import NumberTile from '../trainer/components/NumberTile';
+import IconTile from '../trainer/components/IconTile';
+import Appbar from '../trainer/components/Appbar';
 
-export default function WorkoutsList() {
+export default function TraineeWorkoutsList() {
     const [workouts, setWorkouts] = useState([]);
-    const {trainerId} = useParams();
+    const {traineeId} = useParams();
+
     useEffect(() => {
-        fetch(`/trainers/${trainerId}/workoutplans`)
+        fetch(`/trainees/${traineeId}/workoutplans`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -19,7 +22,7 @@ export default function WorkoutsList() {
             .catch(error => {
                 console.error("There was an error fetching the workouts: ", error);
             });
-    }, [trainerId]);
+    }, [traineeId]);
 
     return (
         <div className="flex h-screen">

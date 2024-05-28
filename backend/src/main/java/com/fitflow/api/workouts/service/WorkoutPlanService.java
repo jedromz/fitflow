@@ -13,13 +13,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class WorkoutPlanService {
 
     private final WorkoutPlanRepository workoutPlanRepository;
     private final TraineeRepository traineeRepository;
     private final TrainerRepository trainerRepository;
     private final ModelMapper modelMapper;
+
+    public WorkoutPlanService(WorkoutPlanRepository workoutPlanRepository, TraineeRepository traineeRepository, TrainerRepository trainerRepository, ModelMapper modelMapper) {
+        this.workoutPlanRepository = workoutPlanRepository;
+        this.traineeRepository = traineeRepository;
+        this.trainerRepository = trainerRepository;
+        this.modelMapper = modelMapper;
+    }
 
 
     public WorkoutPlan addWorkoutPlan(CreateWorkoutPlanCommand createWorkoutPlanCommand) {
@@ -37,5 +43,9 @@ public class WorkoutPlanService {
 
     public List<WorkoutPlanResponse> findTrainersWorkoutPlans(long trainerId) {
         return workoutPlanRepository.findAllByTrainerId(trainerId);
+    }
+
+    public List<WorkoutPlanResponse> findTraineesWorkoutPlans(long traineeId) {
+        return workoutPlanRepository.findAllByTraineeId(traineeId);
     }
 }

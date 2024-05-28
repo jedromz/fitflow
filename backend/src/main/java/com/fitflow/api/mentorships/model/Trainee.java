@@ -1,6 +1,7 @@
 package com.fitflow.api.mentorships.model;
 
 import com.fitflow.api.base.BaseEntity;
+import com.fitflow.api.measurements.MeasurementRecord;
 import com.fitflow.api.reports.Report;
 import com.fitflow.api.workouts.model.WorkoutPlan;
 import jakarta.persistence.*;
@@ -28,6 +29,8 @@ public class Trainee extends BaseEntity {
     private List<WorkoutPlan> workoutPlans = new ArrayList<>();
     @OneToMany(mappedBy = "trainee")
     private List<Report> reports = new ArrayList<>();
+    @OneToMany(mappedBy = "trainee")
+    private List<MeasurementRecord> measurements = new ArrayList<>();
 
     public Trainer currentTrainer() {
         return mentorships.stream()
@@ -35,6 +38,14 @@ public class Trainee extends BaseEntity {
                 .map(Mentorship::getTrainer)
                 .orElseThrow();
     }
+
+    public Mentorship currentMentorship() {
+        return mentorships.stream()
+                .filter(mentorship -> mentorship.getFromDate().isBefore(LocalDate.now()))
+                .filter(mentorship -> mentorship.getToDate().isAfter(LocalDate.now())).max(Comparator.comparing(Mentorship::getFromDate))
+                .orElseThrow();
+    }
+
 
     @Override
     public boolean equals(Object o) {

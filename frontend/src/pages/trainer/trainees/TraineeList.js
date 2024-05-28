@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; // Ensure useParams is imported
-import Appbar from "./Appbar";
+
+import NumberTile from '../components/NumberTile'
+import IconTile from '../components/IconTile'
+import Appbar  from '../components/Appbar'
 
 export default function TraineeList() {
     const [trainees, setTrainees] = useState([]);

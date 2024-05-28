@@ -23,4 +23,9 @@ public class WorkoutPlanController {
     public List<WorkoutPlanResponse> getWorkoutPlans(@PathVariable long trainerId) {
         return workoutPlanService.findTrainersWorkoutPlans(trainerId);
     }
+
+    @GetMapping("/trainees/{traineeId}/workoutplans")
+    public List<WorkoutPlanResponse> getTraineesWorkoutPlans(@PathVariable long traineeId) {
+        return workoutPlanService.findTraineesWorkoutPlans(traineeId);
+    }
 }

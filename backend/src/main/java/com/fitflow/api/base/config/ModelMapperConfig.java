@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Set;
 
 @Configuration
-public class ApplicationConfiguration {
+public class ModelMapperConfig {
 
     @Bean
     public ModelMapper modelMapper(Set<Converter> converters) {
