@@ -1,14 +1,15 @@
 package com.fitflow.api.measurements;
 
 public enum BodyPart {
-    CHEST,
+    WEIGHT,
     SHOULDERS,
-    BACK,
-    BICEPS,
-    TRICEPS,
-    FOREARMS,
-    ABS,
-    QUADS,
-    HAMSTRINGS,
-    CALVES
+    CHEST,
+    RIGHT_ARM,
+    LEFT_ARM,
+    WAIST,
+    HIPS,
+    RIGHT_THIGH,
+    LEFT_THIGH,
+    RIGHT_CALF,
+    LEFT_CALF
 }

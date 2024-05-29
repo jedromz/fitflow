@@ -1,11 +1,6 @@
 package com.fitflow.api.measurements;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +18,11 @@ public class MeasurementController {
     @GetMapping("/trainees/{traineeId}/measurements")
     public List<MeasurementResponse> getTraineesMeasurements(@PathVariable long traineeId) {
         return measurementService.findTraineesMeasurements(traineeId);
+    }
+
+    @PostMapping("/trainees/{traineeId}/measurements")
+    public void createMeasurement(@PathVariable long traineeId, @RequestBody CreateMeasurementCommand command) {
+        measurementService.createMeasurements(traineeId, command.getMeasurements());
     }
 
 }

@@ -27,7 +27,7 @@ public class ReportController {
         this.minioStorageService = minioStorageService;
     }
 
-    @PostMapping("/{traineeId}/report")
+    @PostMapping("/trainees/{traineeId}/report")
     public ResponseEntity<ReportDto> createReport(
             @RequestParam("files") List<MultipartFile> files,
             @RequestParam("title") String title,

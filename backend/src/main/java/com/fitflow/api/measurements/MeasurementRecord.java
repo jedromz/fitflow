@@ -19,7 +19,7 @@ public class MeasurementRecord extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private BodyPart bodyPart;
     @Embedded
-    private Measurement measurement;
+    private MeasurementCommand measurement;
     private LocalDate date;
     @ManyToOne
     private Trainee trainee;

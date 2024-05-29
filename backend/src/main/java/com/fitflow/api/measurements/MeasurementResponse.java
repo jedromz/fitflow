@@ -10,5 +10,5 @@ public interface MeasurementResponse {
 
     public LocalDate getDate();
 
-    public Measurement getMeasurement();
+    public MeasurementCommand getMeasurement();
 }
