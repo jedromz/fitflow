@@ -2,7 +2,7 @@ package com.fitflow.api.reports;
 
 import com.fitflow.api.mentorships.repository.TraineeRepository;
 import com.fitflow.api.minio.MinioStorageService;
-import lombok.AllArgsConstructor;
+import com.fitflow.api.photos.Photo;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -11,6 +11,8 @@ import TraineeDashboard from './pages/trainee/TraineeDashboard';
 import TraineesMeasurements from './pages/trainee/TraineeMeasurements';
 import TraineeWorkoutsList from './pages/trainee/TraineeWorkouts';
 import TraineeReports from './pages/trainee/TraineeReports';
+import TraineesPhotos from './pages/trainee/TraineePhotos';
+import TraineeCurrentTrainer from './pages/trainee/TraineeCurrentTrainer';
 
 export default function App() {
     return (
@@ -28,6 +30,8 @@ export default function App() {
                 <Route path="/trainee/:traineeId/measurements" element={<TraineesMeasurements id={1} />} />
                 <Route path="/trainee/:traineeId/workoutplans" element={<TraineeWorkoutsList id={1} />} />
                 <Route path="/trainee/:traineeId/reports" element={<TraineeReports id={1} />} />
+                <Route path="/trainee/:traineeId/photos" element={<TraineesPhotos id={1} />} />
+                <Route path="/trainee/:traineeId/trainer" element={<TraineeCurrentTrainer id={1} />} />
             </Routes>
         </div>
     );

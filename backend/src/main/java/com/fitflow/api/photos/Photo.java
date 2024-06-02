@@ -1,6 +1,7 @@
-package com.fitflow.api.reports;
+package com.fitflow.api.photos;
 
 import com.fitflow.api.base.BaseEntity;
+import com.fitflow.api.reports.Report;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;

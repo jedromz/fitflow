@@ -12,6 +12,7 @@ services:
       - ~/.m2:/root/.m2
     depends_on:
       - minio
+      - prometheus
     environment:
       - MINIO_ENDPOINT=http://minio:9000
       - MINIO_ACCESS_KEY=minioadmin
@@ -43,6 +44,25 @@ services:
     volumes:
       - minio_data:/data
 
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
 
 volumes:
   minio_data:
+  grafana_data:

@@ -3,6 +3,7 @@ package com.fitflow.api.reports;
 import com.fitflow.api.base.BaseEntity;
 import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.model.Trainer;
+import com.fitflow.api.photos.Photo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;

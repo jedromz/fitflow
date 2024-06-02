@@ -4,6 +4,7 @@ import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.repository.TraineeRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,12 +23,13 @@ public class MeasurementService {
         return measurementRepository.findDistinctByTrainee_Id(traineeId);
     }
 
-    public List<MeasurementRecord> createMeasurements(long traineeId, List<MeasurementDetail> measurements) {
+    public List<MeasurementRecord> createMeasurements(long traineeId, CreateMeasurementCommand command) {
         Trainee trainee = traineeRepository.findById(traineeId).orElseThrow();
         List<MeasurementRecord> savedRecords = new ArrayList<>();
 
-        for (MeasurementDetail detail : measurements) {
+        for (MeasurementDetail detail : command.getMeasurements()) {
             MeasurementRecord record = new MeasurementRecord();
+            record.setDate(LocalDate.parse(detail.getDate()));
             record.setBodyPart(detail.getBodyPart());
             record.setMeasurement(detail.getMeasurement());
             record.setTrainee(trainee);

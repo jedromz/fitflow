@@ -12,8 +12,8 @@ export default function TraineeDashboard({ id }) {
                     <IconTile icon="🏋️" label="Training Plan" to={`/trainee/${id}/workoutplans`}/>
                     <IconTile icon="✉️" label="Reports" to={`/trainee/${id}/reports`}/>
                     <IconTile icon="📏" label="Measurements" to={`/trainee/${id}/measurements`}/>
-                    <IconTile icon="📷" label="Photos" to={`/trainee/${id}/reports`}/>
-                    <IconTile icon="👨‍🏫" label="Trainer" to={`/trainer/${id}/builder`}/>
+                    <IconTile icon="📷" label="Photos" to={`/trainee/${id}/photos`}/>
+                    <IconTile icon="👨‍🏫" label="Trainer" to={`/trainee/${id}/trainer`}/>
                 </div>
             </div>
         </div>

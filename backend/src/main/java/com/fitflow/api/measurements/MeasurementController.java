@@ -22,7 +22,7 @@ public class MeasurementController {
 
     @PostMapping("/trainees/{traineeId}/measurements")
     public void createMeasurement(@PathVariable long traineeId, @RequestBody CreateMeasurementCommand command) {
-        measurementService.createMeasurements(traineeId, command.getMeasurements());
+        measurementService.createMeasurements(traineeId, command);
     }
 
 }

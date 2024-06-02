@@ -1,5 +1,6 @@
 package com.fitflow.api.reports;
 
+import com.fitflow.api.photos.Photo;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Service;

@@ -47,14 +47,14 @@ INSERT INTO report (id, date, trainee_id, trainer_id,title,content) VALUES
 
 INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id)
 VALUES
-(1, 'WEIGHT', 70.5, 'KG', '2024-05-24', 1),
-(2, 'SHOULDERS', 120.0, 'CM', '2024-05-24', 1),
-(3, 'CHEST', 95.0, 'CM', '2024-05-24', 1),
-(4, 'RIGHT_ARM', 35.0, 'CM', '2024-05-24', 1),
-(5, 'LEFT_ARM', 34.5, 'CM', '2024-05-24', 1),
-(6, 'WAIST', 80.0, 'CM', '2024-05-24', 1),
-(7, 'HIPS', 90.0, 'CM', '2024-05-24', 1),
-(8, 'RIGHT_THIGH', 55.0, 'CM', '2024-05-24', 1),
-(9, 'LEFT_THIGH', 54.5, 'CM', '2024-05-24', 1),
-(10, 'RIGHT_CALF', 37.0, 'CM', '2024-05-24', 1),
-(11, 'LEFT_CALF', 36.5, 'CM', '2024-05-24', 1);
+(1000, 'WEIGHT', 70.5, 'KG', '2024-05-24', 1),
+(2000, 'SHOULDERS', 120.0, 'CM', '2024-05-24', 1),
+(3000, 'CHEST', 95.0, 'CM', '2024-05-24', 1),
+(4000, 'RIGHT_ARM', 35.0, 'CM', '2024-05-24', 1),
+(5000, 'LEFT_ARM', 34.5, 'CM', '2024-05-24', 1),
+(6000, 'WAIST', 80.0, 'CM', '2024-05-24', 1),
+(7000, 'HIPS', 90.0, 'CM', '2024-05-24', 1),
+(8000, 'RIGHT_THIGH', 55.0, 'CM', '2024-05-24', 1),
+(9000, 'LEFT_THIGH', 54.5, 'CM', '2024-05-24', 1),
+(10000, 'RIGHT_CALF', 37.0, 'CM', '2024-05-24', 1),
+(11000, 'LEFT_CALF', 36.5, 'CM', '2024-05-24', 1);
