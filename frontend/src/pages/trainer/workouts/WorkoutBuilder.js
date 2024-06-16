@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 // Initial workout items
 
 
+
 // Assuming a predefined list of trainees
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -16,7 +17,8 @@ const WorkoutBuilder = () => {
     const [description, setDescription] = useState('');
     const [selectedTrainee, setSelectedTrainee] = useState('');
     const [trainees, setTrainees] = useState([]);
-    const {trainerId} = useParams();
+    const { trainerId } = useParams();
+    
     useEffect(() => {
     fetch(`/exercises`) // Corrected endpoint for fetching exercises
             .then(response => {
@@ -27,7 +29,7 @@ const WorkoutBuilder = () => {
             })
             .then(data => setExercises(data))
             .catch(error => console.error("There was an error fetching the workouts: ", error));
-        const trainerId = 1;
+        
         fetch(`/api/trainers/${trainerId}/mentorships`)
             .then(response => {
                 if (!response.ok) {

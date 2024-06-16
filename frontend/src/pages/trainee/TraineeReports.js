@@ -9,6 +9,8 @@ export default function TraineeReports() {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State for Add New Report Modal
     const { traineeId } = useParams();
     const [photoUrls, setPhotoUrls] = useState({});
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
     
     const getTodayDate = () => {
         const today = new Date();
@@ -46,13 +48,15 @@ export default function TraineeReports() {
             });
     }, [traineeId]);
 
-    const handleReportClick = (reportId) => {
+    const handleReportClick = async (reportId) => {
         setSelectedReport(reports.find(report => report.id === reportId));
         setIsModalOpen(true);
+        await fetchComments(reportId);
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
+        setComments([]);
     };
 
     const openAddModal = () => {
@@ -61,6 +65,48 @@ export default function TraineeReports() {
 
     const closeAddModal = () => {
         setIsAddModalOpen(false);
+    };
+
+    const fetchComments = async (reportId) => {
+        try {
+            const response = await fetch(`/reports/${reportId}/comments`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch comments');
+            }
+            const data = await response.json();
+            setComments(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const addComment = async () => {
+        const text = newComment;
+        const reportId = selectedReport.id;
+
+        try {
+            const response = await fetch('/reports/comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    traineeId,
+                    trainerId: 1000, // Adjust as needed
+                    text,
+                    reportId
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add comment');
+            }
+
+            await fetchComments(reportId);
+            setNewComment('');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleAddReport = (e) => {
@@ -73,7 +119,6 @@ export default function TraineeReports() {
         })
         .then(response => response.json())
         .then(newReport => {
-            // Fetch updated list of reports
             fetch(`/trainees/${traineeId}/reports`)
                 .then(response => {
                     if (!response.ok) {
@@ -164,7 +209,27 @@ export default function TraineeReports() {
                                         </div>
                                     </div>
                                     <div className="mt-4">
-                                        <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" placeholder="Write a comment..."></textarea>
+                                        <textarea
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            rows="4"
+                                            value={newComment}
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                            placeholder="Write a comment..."
+                                        ></textarea>
+                                        <button onClick={addComment} className="mt-2 px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            Add Comment
+                                        </button>
+                                    </div>
+                                    <div className="mt-4">
+                                        <h4 className="text-lg font-semibold">Comments</h4>
+                                        <ul>
+                                            {comments.map(comment => (
+                                                <li key={comment.id} className="mt-2 p-2 border-b">
+                                                    <p className="text-sm">{comment.text}</p>
+                                                    <small className="text-gray-500">- {comment.trainerName} ({comment.trainerEmail})</small>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                     <div className="items-center px-4 py-3">
                                         <button onClick={closeModal} className="px-4 py-2 bg-gray-800 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">

@@ -4,9 +4,7 @@ import com.fitflow.api.base.BaseEntity;
 import com.fitflow.api.mentorships.model.Trainee;
 import com.fitflow.api.mentorships.model.Trainer;
 import com.fitflow.api.photos.Photo;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,10 +25,11 @@ public class Report extends BaseEntity {
     @ManyToOne
     private Trainer trainer;
     private String title;
+    @Lob
     private String content;
     private LocalDate date;
-    @OneToMany(mappedBy = "report")
+    @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final List<Comment> comments = new ArrayList<>();
-    @OneToMany(mappedBy = "report")
+    @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final List<Photo> photos = new ArrayList<>();
 }

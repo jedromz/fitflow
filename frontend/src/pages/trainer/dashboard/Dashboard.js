@@ -2,18 +2,19 @@ import React from 'react';
 import NumberTile from '../components/NumberTile'
 import IconTile from '../components/IconTile'
 import Appbar  from '../components/Appbar'
-
-export default function Dashboard({ id }) {
+import { useParams } from 'react-router-dom';
+export default function Dashboard( ) {
+    const { trainerId } = useParams();
     return (
         <div className='flex h-screen'>
             <Appbar/>
             <div className="overflow-x-auto w-full">
                 <div className="grid grid-cols-3 gap-20 ml-5">
-                    <NumberTile number="1" label="Mentorships" to={`/trainer/${id}/mentorships`}/>
-                    <IconTile icon="🏋️" label="Workouts" to={`/trainer/${id}/workouts`}/>
-                    <IconTile icon="👤" label="Trainees" to={`/trainer/${id}/trainees`}/>
-                    <IconTile icon="✉️" label="Reports" to={`/trainer/${id}/reports`}/>
-                    <IconTile icon="🔨" label="Plan Builder" to={`/trainer/${id}/builder`}/>
+                    <NumberTile number="1" label="Mentorships" to={`/trainer/${trainerId}/mentorships`}/>
+                    <IconTile icon="🏋️" label="Workouts" to={`/trainer/${trainerId}/workouts`}/>
+                    <IconTile icon="👤" label="Trainees" to={`/trainer/${trainerId}/trainees`}/>
+                    <IconTile icon="✉️" label="Reports" to={`/trainer/${trainerId}/reports`}/>
+                    <IconTile icon="🔨" label="Plan Builder" to={`/trainer/${trainerId}/builder`}/>
                     <IconTile icon="💪" label="Exercises" to="/exercises"/>
                 </div>
             </div>

@@ -4,4 +4,6 @@ public interface TraineeResponse {
 
     String getName();
     String getEmail();
+    double getWeight();
+    double getHeight();
 }

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Appbar from '../components/Appbar';
 import DefaultTable from '../../../components/DefaultTable';
 
@@ -16,10 +16,9 @@ export default function MentorshipsList() {
     type: ''
   });
   const [trainees, setTrainees] = useState([]);
-  const {trainerId} = useParams();
+  const { trainerId } = useParams();
 
   useEffect(() => {
-    const trainerId = 1;
     fetch(`/api/trainers/${trainerId}/mentorships`)
       .then(response => {
         if (!response.ok) {
@@ -48,7 +47,7 @@ export default function MentorshipsList() {
 
     const mentorshipData = {
       traineeEmail: newMentorship.email,
-      trainerId: 1,
+      trainerId: trainerId,
       fromDate: newMentorship.startDate,
       toDate: newMentorship.endDate,
       price: newMentorship.price,
@@ -80,8 +79,8 @@ export default function MentorshipsList() {
   };
 
   const handleChange = (event) => {
-    const {name, value} = event.target;
-    setNewMentorship(prevState => ({...prevState, [name]: value}));
+    const { name, value } = event.target;
+    setNewMentorship(prevState => ({ ...prevState, [name]: value }));
     console.log(newMentorship);
   };
 
@@ -95,8 +94,8 @@ export default function MentorshipsList() {
   };
 
   const handleNewTraineeEntry = (event) => {
-    const {name, value} = event.target;
-    setNewMentorship(prevState => ({...prevState, [name]: value, traineeSource: 'new_trainee '}));
+    const { name, value } = event.target;
+    setNewMentorship(prevState => ({ ...prevState, [name]: value, traineeSource: 'new_trainee ' }));
     console.log(newMentorship);
   };
 
@@ -105,7 +104,7 @@ export default function MentorshipsList() {
     mentorship.fromDate,
     mentorship.toDate,
     mentorship.price,
-    mentorship.traineeName
+    mentorship.trainee_Name
   ]);
 
   return (

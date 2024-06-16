@@ -4,6 +4,7 @@ import com.fitflow.api.mentorships.dto.MentorshipResponse;
 import com.fitflow.api.mentorships.model.Mentorship;
 import com.fitflow.api.mentorships.model.Trainer;
 import com.fitflow.api.mentorships.repository.TraineeRepository;
+import com.fitflow.api.workouts.model.WorkoutPlan;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,14 @@ public class TraineeController {
                 .orElseThrow(() -> new RuntimeException("Trainee not found"))
                 .currentMentorship();
         return modelMapper.map(currentMentorship, DefaultMentorshipResponse.class);
+    }
+
+    @GetMapping("/{traineeId}/trainingplans/current")
+    public TrainingPlanResponse getCurrentTrainingPlan(@PathVariable long traineeId) {
+        WorkoutPlan currentTrainingPlan = traineeRepository.findById(traineeId)
+                .orElseThrow(() -> new RuntimeException("Trainee not found"))
+                .currentTrainingPlan();
+        return modelMapper.map(currentTrainingPlan, TrainingPlanResponse.class);
     }
 
 }

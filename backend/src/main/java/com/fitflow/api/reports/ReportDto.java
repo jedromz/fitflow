@@ -13,8 +13,10 @@ import java.util.List;
 @Getter
 @Setter
 public class ReportDto {
+    private long id;
     private String title;
     private String content;
     private LocalDate date;
     private List<String> photos;
+    private List<CommentDto> comments = List.of();
 }

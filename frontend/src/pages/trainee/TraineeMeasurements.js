@@ -11,6 +11,10 @@ export default function TraineesMeasurements() {
     const { traineeId } = useParams();
 
     useEffect(() => {
+        fetchMeasurements();
+    }, [traineeId]);
+
+    const fetchMeasurements = () => {
         fetch(`/trainees/${traineeId}/measurements`)
             .then(response => {
                 if (!response.ok) {
@@ -30,7 +34,7 @@ export default function TraineesMeasurements() {
             .catch(error => {
                 console.error('There was a problem fetching the measurements:', error);
             });
-    }, [traineeId]);
+    };
 
     const handleMeasurementClick = (date) => {
         setSelectedMeasurement(measurements[date]);
@@ -78,13 +82,7 @@ export default function TraineesMeasurements() {
         })
         .then(response => response.json())
         .then(data => {
-            const updatedMeasurements = { ...measurements };
-            data.measurements.forEach(measurement => {
-                const { date, bodyPart, measurement: { measurementValue, unit } } = measurement;
-                if (!updatedMeasurements[date]) updatedMeasurements[date] = {};
-                updatedMeasurements[date][bodyPart] = { measurementValue, unit };
-            });
-            setMeasurements(updatedMeasurements);
+            fetchMeasurements();
             closeFormModal();
         })
         .catch(error => {

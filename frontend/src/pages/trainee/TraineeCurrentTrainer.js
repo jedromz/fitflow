@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Appbar from '../trainer/components/Appbar';
+import { useParams } from 'react-router-dom';
 
 const TraineeCurrentTrainer = () => {
   const [trainer, setTrainer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { traineeId } = useParams();
 
   useEffect(() => {
     const fetchTrainer = async () => {
       try {
-        const response = await fetch('/api/trainees/1/trainers/current');
+        const response = await  fetch(`/api/trainees/${traineeId}/trainers/current`)
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

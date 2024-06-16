@@ -1,5 +1,6 @@
 package com.fitflow.api.mentorships.service;
 
+import com.fitflow.api.mentorships.controller.AddTraineeRequest;
 import com.fitflow.api.mentorships.controller.TraineeResponse;
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
 import com.fitflow.api.mentorships.dto.MentorshipResponse;

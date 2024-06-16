@@ -3,16 +3,14 @@ package com.fitflow.api.mentorships.model;
 import com.fitflow.api.base.BaseEntity;
 import com.fitflow.api.measurements.MeasurementRecord;
 import com.fitflow.api.reports.Report;
+import com.fitflow.api.workouts.model.Progression;
 import com.fitflow.api.workouts.model.WorkoutPlan;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @AllArgsConstructor
@@ -23,6 +21,9 @@ public class Trainee extends BaseEntity {
     private String name;
     @Column(unique = true)
     private String email;
+    private double height; // Height in meters or centimeters
+    private double weight; // Weight in kilograms
+
     @OneToMany(mappedBy = "trainee")
     private List<Mentorship> mentorships = new ArrayList<>();
     @OneToMany(mappedBy = "trainee")
@@ -31,6 +32,18 @@ public class Trainee extends BaseEntity {
     private List<Report> reports = new ArrayList<>();
     @OneToMany(mappedBy = "trainee")
     private List<MeasurementRecord> measurements = new ArrayList<>();
+    @OneToMany(mappedBy = "trainee")
+    private List<Progression> progressions = new ArrayList<>();
+
+    public Map<String, String> lastProgression(String exerciseName) {
+        return progressions.stream()
+                .filter(progression -> progression.getExercise().getName().equals(exerciseName))
+                .max(Comparator.comparing(Progression::getDate))
+                .map(progression -> Map.of("sets", String.valueOf(progression.getSets()),
+                        "reps", String.valueOf(progression.getReps()),
+                        "weight", String.valueOf(progression.getWeight())))
+                .orElseGet(() -> Map.of("sets", "0", "reps", "0", "weight", "0"));
+    }
 
     public Trainer currentTrainer() {
         return mentorships.stream()
@@ -46,6 +59,16 @@ public class Trainee extends BaseEntity {
                 .orElseThrow();
     }
 
+    public WorkoutPlan currentTrainingPlan() {
+        return workoutPlans.stream()
+                .filter(workoutPlan -> workoutPlan.getFromDate().isBefore(LocalDate.now()))
+                .filter(workoutPlan -> workoutPlan.getToDate().isAfter(LocalDate.now()))
+                .max(Comparator.comparing(WorkoutPlan::getFromDate))
+                .orElseGet(() -> workoutPlans.stream()
+                        .filter(workoutPlan -> workoutPlan.getToDate().isBefore(LocalDate.now()))
+                        .max(Comparator.comparing(WorkoutPlan::getFromDate))
+                        .orElseThrow());
+    }
 
     @Override
     public boolean equals(Object o) {

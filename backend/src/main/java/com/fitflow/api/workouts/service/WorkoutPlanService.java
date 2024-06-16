@@ -37,6 +37,8 @@ public class WorkoutPlanService {
         var workoutPlan = modelMapper.map(createWorkoutPlanCommand, WorkoutPlan.class);
         workoutPlan.setTrainee(trainee);
         workoutPlan.setTrainer(trainer);
+        workoutPlan.setFromDate(createWorkoutPlanCommand.getFromDate());
+        workoutPlan.setToDate(createWorkoutPlanCommand.getToDate());
 
         return workoutPlanRepository.save(workoutPlan);
     }

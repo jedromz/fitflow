@@ -15,6 +15,7 @@ import java.util.List;
 public class TrainerController {
 
     private final MentorshipService mentorshipService;
+    private final TraineeService traineeService;
     private final TrainerRepository trainerRepository;
 
     @GetMapping("/{trainerId}/mentorships")
@@ -36,4 +37,5 @@ public class TrainerController {
         return trainerRepository.findById(trainerId, TrainerResponse.class)
                 .orElseThrow(() -> new RuntimeException("Trainer not found"));
     }
+
 }

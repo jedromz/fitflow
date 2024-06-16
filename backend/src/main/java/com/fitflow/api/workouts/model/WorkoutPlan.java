@@ -33,35 +33,7 @@ public class WorkoutPlan extends BaseEntity {
     private List<Workout> workouts;
 }
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-class Workout extends BaseEntity {
-    private LocalDate date;
-
-    @ManyToOne
-    private WorkoutPlan workoutPlan;
-
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<WorkoutExercise> workoutExercises; // Updated to use WorkoutExercise
-}
 
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-class WorkoutExercise extends BaseEntity {
-    @ManyToOne
-    private Workout workout;
 
-    @ManyToOne
-    private Exercise exercise;
-
-    private int sets;
-    private int reps;
-}
 

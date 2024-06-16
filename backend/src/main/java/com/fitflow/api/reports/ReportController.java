@@ -65,4 +65,17 @@ public class ReportController {
     public String getFileUrl(@PathVariable String path) {
         return minioStorageService.getObjectByPath(path);
     }
+
+    @PostMapping("/reports/comment")
+    public ResponseEntity<CommentDto> addComment(@RequestBody CreateCommentCommand command) {
+        reportService.addComment(command, command.getReportId());
+        return null;
+    }
+
+    @GetMapping("/reports/{reportId}/comments")
+    public ResponseEntity<List<CommentDto>> getComments(@PathVariable long reportId) {
+        return ResponseEntity.ok(reportService.getComments(reportId).stream()
+                .map(comment -> modelMapper.map(comment, CommentDto.class))
+                .collect(toList()));
+    }
 }
