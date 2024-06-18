@@ -8,6 +8,11 @@ public class DefaultTrainerResponse implements TrainerResponse {
     private String name;
     private String email;
     private String phone;
+    private String instagram;
+    private String website;
+    private String bio;
+    private String photo;
+
 
     // Constructor with all fields
     public DefaultTrainerResponse(Long id, String name, String email, String phone) {
@@ -48,6 +53,26 @@ public class DefaultTrainerResponse implements TrainerResponse {
         return phone;
     }
 
+    @Override
+    public String getInstagram() {
+        return instagram;
+    }
+
+    @Override
+    public String getWebsite() {
+        return website;
+    }
+
+    @Override
+    public String getBio() {
+        return bio;
+    }
+
+    @Override
+    public String getPhoto() {
+        return photo;
+    }
+
     // Setter methods (optional, if needed)
     public void setId(Long id) {
         this.id = id;
@@ -64,4 +89,21 @@ public class DefaultTrainerResponse implements TrainerResponse {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
 }

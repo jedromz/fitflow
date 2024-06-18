@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Appbar from '../trainer/components/Appbar';
 import { useParams } from 'react-router-dom';
+import TraineeAppbar from './TraineeAppbar';
 
 const TraineesPhotos = () => {
   const [photos, setPhotos] = useState([]);
@@ -76,7 +77,7 @@ const TraineesPhotos = () => {
 
   return (
     <div className="flex h-screen">
-      <Appbar />
+      <TraineeAppbar/>
       <div className="overflow-x-auto w-full">
         <div className="m-5">
           <h1 className="text-xl font-semibold mb-4">Trainee Photos</h1>

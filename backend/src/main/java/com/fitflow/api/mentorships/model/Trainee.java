@@ -1,5 +1,6 @@
 package com.fitflow.api.mentorships.model;
 
+import com.fitflow.api.auth.User;
 import com.fitflow.api.base.BaseEntity;
 import com.fitflow.api.measurements.MeasurementRecord;
 import com.fitflow.api.reports.Report;
@@ -34,6 +35,8 @@ public class Trainee extends BaseEntity {
     private List<MeasurementRecord> measurements = new ArrayList<>();
     @OneToMany(mappedBy = "trainee")
     private List<Progression> progressions = new ArrayList<>();
+    @OneToOne
+    private User user;
 
     public Map<String, String> lastProgression(String exerciseName) {
         return progressions.stream()

@@ -3,9 +3,9 @@ package com.fitflow.api.mentorships.controller;
 import com.fitflow.api.mentorships.dto.CreateMentorshipRequest;
 import com.fitflow.api.mentorships.dto.DefaultMentorshipResponse;
 import com.fitflow.api.mentorships.dto.MentorshipResponse;
+import com.fitflow.api.mentorships.dto.MentorshipResponseWithDetails;
 import com.fitflow.api.mentorships.repository.MentorshipRepository;
 import com.fitflow.api.mentorships.service.MentorshipService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +26,17 @@ public class MentorshipController {
     }
 
     @GetMapping
-    public List<MentorshipResponse> getMentorship() {
+    public List<MentorshipResponse> getMentorships() {
         return mentorshipRepository.findAll()
                 .stream()
                 .map(mentorship -> modelMapper.map(mentorship, MentorshipResponse.class))
                 .toList();
+    }
+    @GetMapping("/{mentorshipId}")
+    public MentorshipResponseWithDetails getMentorship(@PathVariable long mentorshipId) {
+        return mentorshipRepository.findById(mentorshipId)
+                .map(mentorship -> modelMapper.map(mentorship, MentorshipResponseWithDetails.class))
+                .orElseThrow(() -> new IllegalArgumentException("Mentorship not found"));
     }
 
     @PostMapping

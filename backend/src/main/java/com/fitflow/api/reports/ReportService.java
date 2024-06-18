@@ -52,9 +52,8 @@ public class ReportService {
     }
 
     public List<Report> getReports(long trainerId) {
-        var trainer = traineeRepository.findById(trainerId)
-                .orElseThrow(() -> new IllegalArgumentException("Trainee not found"))
-                .currentTrainer();
+        var trainer = trainerRepository.findById(trainerId)
+                .orElseThrow(() -> new IllegalArgumentException("Trainee not found"));
 
         return reportRepository.findAllByTrainer(trainer);
     }
@@ -72,13 +71,13 @@ public class ReportService {
                 .orElseThrow(() -> new IllegalArgumentException("Report not found"));
         Comment comment = new Comment();
         if (command.getTraineeId() != 0) {
-            var trainee = traineeRepository.findById(command.getTraineeId())
+            var trainee = traineeRepository.findByUser_Id(command.getTraineeId())
                     .orElseThrow(() -> new IllegalArgumentException("Trainee not found"));
             comment.setTrainee(trainee);
         }
 
         if (command.getTrainerId() != 0) {
-            var trainer = trainerRepository.findById(command.getTrainerId())
+            var trainer = trainerRepository.findByUser_Id(command.getTrainerId())
                     .orElseThrow(() -> new IllegalArgumentException("Trainer not found"));
             comment.setTrainer(trainer);
         }

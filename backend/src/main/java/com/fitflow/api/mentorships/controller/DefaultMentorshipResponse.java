@@ -1,27 +1,26 @@
 package com.fitflow.api.mentorships.controller;
 
 import com.fitflow.api.mentorships.dto.MentorshipResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class DefaultMentorshipResponse implements MentorshipResponse {
 
+    private Long id;
     private LocalDate fromDate;
     private LocalDate toDate;
     private BigDecimal price;
     private String trainee_Name;
 
-    // Constructor with all fields
-    public DefaultMentorshipResponse(LocalDate fromDate, LocalDate toDate, BigDecimal price, String trainee_Name) {
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.price = price;
-        this.trainee_Name = trainee_Name;
-    }
 
-    // Default constructor
-    public DefaultMentorshipResponse() {
+    @Override
+    public Long getId() {
+        return id;
     }
 
     @Override

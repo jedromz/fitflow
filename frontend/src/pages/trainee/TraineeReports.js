@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Appbar from '../trainer/components/Appbar';
+import TraineeAppbar from './TraineeAppbar';
 
 export default function TraineeReports() {
     const [reports, setReports] = useState([]);
@@ -154,7 +155,7 @@ export default function TraineeReports() {
 
     return (
         <div className="flex h-screen">
-            <Appbar />
+            <TraineeAppbar/>
             <div className="overflow-x-auto w-full">
                 <div className="m-5">
                     <h1 className="text-xl font-semibold mb-4">Reports</h1>

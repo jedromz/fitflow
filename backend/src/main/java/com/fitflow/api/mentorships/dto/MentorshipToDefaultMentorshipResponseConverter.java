@@ -11,6 +11,7 @@ public class MentorshipToDefaultMentorshipResponseConverter implements Converter
     @Override
     public DefaultMentorshipResponse convert(MappingContext<Mentorship, DefaultMentorshipResponse> mappingContext) {
         Mentorship mentorship = mappingContext.getSource();
-        return new DefaultMentorshipResponse(mentorship.getFromDate(), mentorship.getToDate(), mentorship.getPrice(), mentorship.getTrainee().getName());
+        DefaultMentorshipResponse response = new DefaultMentorshipResponse(mentorship.getId(), mentorship.getFromDate(), mentorship.getToDate(), mentorship.getPrice(), mentorship.getTrainee().getName());
+        return response;
     }
 }

@@ -33,7 +33,31 @@ const Login = ({ setCookie }) => {
 
         setCookie(cookies.JSESSIONID);
         alert('Login successful');
-        navigate('/trainer/123/dashboard');
+
+        const userResponse = await fetch('/me', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          const userId = userData.id;
+          const userRole = userData.roles[0];
+
+          if (userRole === 'ROLE_TRAINEE') {
+            navigate(`/trainee/${userId}/dashboard`);
+          } else if (userRole === 'ROLE_TRAINER') {
+            navigate(`/trainer/${userId}/dashboard`);
+          }else if(userRole === 'ROLE_ADMIN'){
+            navigate(`/trainee/${userId}/dashboard`);
+          }
+        } else {
+          console.log('Failed to fetch user data', userResponse.status, userResponse.statusText);
+          alert('Failed to fetch user data');
+        }
       } else {
         console.log('Login failed', response.status, response.statusText);
         alert('Wrong credentials');

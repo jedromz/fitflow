@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Appbar from '../trainer/components/Appbar';
+import TraineeAppbar from './TraineeAppbar';
 
 export default function TraineesMeasurements() {
     const [measurements, setMeasurements] = useState([]);
@@ -8,6 +9,7 @@ export default function TraineesMeasurements() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [unit, setUnit] = useState('CM');
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const { traineeId } = useParams();
 
     useEffect(() => {
@@ -100,7 +102,7 @@ export default function TraineesMeasurements() {
 
     return (
         <div className="flex h-screen">
-            <Appbar />
+            <TraineeAppbar/>
             <div className="overflow-x-auto w-full">
                 <div className="m-5">
                     <h1 className="text-xl font-semibold mb-4">Trainee Measurements</h1>
@@ -175,7 +177,15 @@ export default function TraineesMeasurements() {
                                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
                                                 Date
                                             </label>
-                                            <input type="date" name="date" id="date" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+                                            <input
+                                                type="date"
+                                                name="date"
+                                                id="date"
+                                                value={date}
+                                                onChange={(e) => setDate(e.target.value)}
+                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                required
+                                            />
                                         </div>
                                         {[
                                             { label: 'Weight', id: 'weight', unitOptions: ['KG'] },

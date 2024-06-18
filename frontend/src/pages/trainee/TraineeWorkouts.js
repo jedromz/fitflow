@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import NumberTile from '../trainer/components/NumberTile';
 import IconTile from '../trainer/components/IconTile';
 import Appbar from '../trainer/components/Appbar';
+import TraineeAppbar from './TraineeAppbar';
 
 export default function TraineeWorkoutsList() {
     const [workouts, setWorkouts] = useState([]);
@@ -28,7 +29,7 @@ export default function TraineeWorkoutsList() {
 
     const handleTrainingPlanClick = async (workoutId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/trainees/${traineeId}/trainingplans/current`);
+            const response = await fetch(`/workoutplans/${workoutId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch training plan details');
             }
@@ -54,7 +55,7 @@ export default function TraineeWorkoutsList() {
 
     return (
         <div className="flex h-screen">
-            <Appbar />
+            <TraineeAppbar />
             <div className="overflow-x-auto w-full">
                 <div className="shadow-md sm:rounded-lg m-5 flex-grow">
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -81,19 +82,19 @@ export default function TraineeWorkoutsList() {
             </div>
 
             {isModalOpen && selectedTrainingPlan && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onClick={closeModal}>
-                    <div className="relative top-20 mx-auto p-5 border w-3/4 shadow-lg rounded-md bg-white" onClick={e => e.stopPropagation()}>
-                        <div className="mt-3 text-center">
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center" onClick={closeModal}>
+                    <div className="relative mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white" onClick={e => e.stopPropagation()}>
+                        <div className="text-center">
                             <h3 className="text-lg leading-6 font-medium text-gray-900">{selectedTrainingPlan.name}</h3>
                             <div className="mt-2">
                                 <p className="text-sm text-gray-500">{selectedTrainingPlan.description}</p>
                                 <p className="text-sm text-gray-500">From: {selectedTrainingPlan.fromDate}</p>
                                 <p className="text-sm text-gray-500">To: {selectedTrainingPlan.toDate}</p>
                                 <h4 className="text-md font-semibold mt-4">Exercises by Day</h4>
-                                <div className="mt-4">
-                                    {Object.entries(groupExercisesByDay(selectedTrainingPlan.exercies)).map(([day, exercises]) => (
-                                        <div key={day} className="mb-4">
-                                            <h5 className="text-md font-semibold">{day}</h5>
+                                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                                    {selectedTrainingPlan.exercies && Object.entries(groupExercisesByDay(selectedTrainingPlan.exercies)).map(([day, exercises]) => (
+                                        <div key={day} className="p-4 border rounded-md bg-gray-50">
+                                            <h5 className="text-md font-semibold mb-2">{day}</h5>
                                             <ul className="list-disc list-inside">
                                                 {exercises.map((exercise, index) => (
                                                     <li key={index} className="text-sm text-gray-500">{exercise.exerciseOrder}. {exercise.name}</li>

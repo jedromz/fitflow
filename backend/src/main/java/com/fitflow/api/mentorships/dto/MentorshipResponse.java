@@ -5,6 +5,9 @@ import java.time.LocalDate;
 
 
 public interface MentorshipResponse {
+
+    Long getId();
+
     LocalDate getFromDate();
 
     LocalDate getToDate();

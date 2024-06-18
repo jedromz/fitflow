@@ -51,7 +51,6 @@ export default function Reports() {
 
     const addComment = async () => {
         const traineeId = 0; // Adjust as needed
-        const trainerId = 1000; // Adjust as needed
         const text = newComment;
         const reportId = selectedReport.id;
 

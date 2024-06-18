@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Appbar from '../trainer/components/Appbar';
+import TraineeAppbar from './TraineeAppbar';
 
 export default function TraineeTrainingPlan() {
     const [trainingPlan, setTrainingPlan] = useState(null);
@@ -53,7 +54,6 @@ export default function TraineeTrainingPlan() {
             .then(response => response.json())
             .then(data => {
                 console.log('Progressions saved:', data);
-                // Optionally, fetch the latest progression again after saving
                 fetch(`/trainees/${traineeId}/progressions/${exerciseName}`)
                     .then(response => response.json())
                     .then(data => {
@@ -71,43 +71,43 @@ export default function TraineeTrainingPlan() {
 
     return (
         <div className="flex h-screen">
-            <Appbar />
-            <div className="overflow-x-auto w-full">
-                <div className="m-5">
-                    <h1 className="text-xl font-semibold mb-4">Training Plan</h1>
+           <TraineeAppbar/>
+            <div className="overflow-x-auto w-full p-6">
+                <div className="mx-auto max-w-4xl">
+                    <h1 className="text-2xl font-semibold mb-6 text-center">Training Plan</h1>
                     {trainingPlan ? (
-                        <div>
-                            <h2 className="text-lg font-semibold mb-4">{trainingPlan.name}</h2>
-                            <p className="mb-4">{trainingPlan.description}</p>
+                        <div className="bg-white shadow-md rounded-lg p-6">
+                            <h2 className="text-xl font-semibold mb-4 text-center">{trainingPlan.name}</h2>
+                            <p className="mb-6 text-center">{trainingPlan.description}</p>
                             {daysOfWeek.map(day => (
-                                <div key={day} className="mb-6">
+                                <div key={day} className="mb-8">
                                     <h3 className="text-lg font-semibold mb-2">{day}</h3>
                                     <ul>
                                         {trainingPlan.exercies.filter(exercise => exercise.dayOfWeek === day).sort((a, b) => a.exerciseOrder - b.exerciseOrder).map(exercise => (
-                                            <li key={exercise.name} className="mb-2">
+                                            <li key={exercise.name} className="mb-4">
                                                 <div className="flex justify-between items-center">
-                                                    <span>{exercise.name}</span>
-                                                    <form className="flex space-x-2" onSubmit={(e) => handleFormSubmit(e, exercise.name)}>
+                                                    <span className="w-1/4">{exercise.name}</span>
+                                                    <form className="flex space-x-2 w-3/4" onSubmit={(e) => handleFormSubmit(e, exercise.name)}>
                                                         <input
                                                             type="number"
                                                             placeholder="Sets"
                                                             value={progressions[exercise.name]?.sets || ''}
                                                             onChange={(e) => handleProgressionChange(exercise.name, 'sets', e.target.value)}
-                                                            className="border rounded py-1 px-2"
+                                                            className="border rounded py-1 px-2 w-1/3"
                                                         />
                                                         <input
                                                             type="number"
                                                             placeholder="Reps"
                                                             value={progressions[exercise.name]?.reps || ''}
                                                             onChange={(e) => handleProgressionChange(exercise.name, 'reps', e.target.value)}
-                                                            className="border rounded py-1 px-2"
+                                                            className="border rounded py-1 px-2 w-1/3"
                                                         />
                                                         <input
                                                             type="number"
                                                             placeholder="Weight"
                                                             value={progressions[exercise.name]?.weight || ''}
                                                             onChange={(e) => handleProgressionChange(exercise.name, 'weight', e.target.value)}
-                                                            className="border rounded py-1 px-2"
+                                                            className="border rounded py-1 px-2 w-1/3"
                                                         />
                                                         <button
                                                             type="submit"
@@ -118,7 +118,7 @@ export default function TraineeTrainingPlan() {
                                                     </form>
                                                 </div>
                                                 {progressions[exercise.name] && (
-                                                    <div className="mt-2 text-gray-600">
+                                                    <div className="mt-2 text-gray-600 text-sm">
                                                         <p>Last Progression - Sets: {progressions[exercise.name].sets}, Reps: {progressions[exercise.name].reps}, Weight: {progressions[exercise.name].weight}</p>
                                                     </div>
                                                 )}
@@ -129,7 +129,7 @@ export default function TraineeTrainingPlan() {
                             ))}
                         </div>
                     ) : (
-                        <p>Loading training plan...</p>
+                        <p className="text-center">Loading training plan...</p>
                     )}
                 </div>
             </div>

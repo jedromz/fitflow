@@ -7,4 +7,15 @@ public interface TrainerResponse {
     public String getName();
 
     public String getEmail();
+
+    public String getPhone();
+
+    public String getInstagram();
+
+    public String getWebsite();
+
+    public String getBio();
+
+    public String getPhoto();
+
 }
