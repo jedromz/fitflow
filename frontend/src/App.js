@@ -16,11 +16,16 @@ import TraineeCurrentTrainer from './pages/trainee/TraineeCurrentTrainer';
 import TraineeTrainingPlan from './pages/trainee/TraineeCurrentTrainingPlan';
 import Login from './pages/auth/Login';
 import { useState } from 'react';
+import PrivateRoutes from './PrivateRoutes';
 export default function App() {
     const [cookie, setCookie] = useState(null);
     return (
         <div>
             <Routes>
+                <Route path="/" element={<PrivateRoutes />} >
+                <Route element={<TraineeList/>} path="/" exact/>
+                <Route element={<TraineeList/>} path="/products"/>
+                 </Route>
                 <Route path="/login" element={<Login setCookie={setCookie} />} />
 
                 <Route path="/trainer/:trainerId/trainees" element={<TraineeList />} />
