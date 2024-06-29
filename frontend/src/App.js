@@ -17,17 +17,22 @@ import TraineeTrainingPlan from './pages/trainee/TraineeCurrentTrainingPlan';
 import Login from './pages/auth/Login';
 import { useState } from 'react';
 import PrivateRoutes from './PrivateRoutes';
+import SignInWithToken from './pages/auth/SignInWithToken';
+import RegisterTrainer from './pages/trainer/RegisterTrainer';
+import EnterTraineeDetails from './pages/trainee/EnterTraineeDetails';
 export default function App() {
     const [cookie, setCookie] = useState(null);
     return (
         <div>
             <Routes>
+                <Route path="/sign-in" element={<SignInWithToken />} />
                 <Route path="/" element={<PrivateRoutes />} >
                 <Route element={<TraineeList/>} path="/" exact/>
                 <Route element={<TraineeList/>} path="/products"/>
                  </Route>
                 <Route path="/login" element={<Login setCookie={setCookie} />} />
 
+                <Route path="/register/trainer" element={<RegisterTrainer />} />
                 <Route path="/trainer/:trainerId/trainees" element={<TraineeList />} />
                 <Route path="/trainer/:trainerId/dashboard" element={<Dashboard />} />
                 <Route path="/trainer/:trainerId/mentorships" element={<MentorshipsList />} />
@@ -43,6 +48,7 @@ export default function App() {
                 <Route path="/trainee/:traineeId/photos" element={<TraineesPhotos id={1} />} />
                 <Route path="/trainee/:traineeId/trainer" element={<TraineeCurrentTrainer/>} />
                 <Route path="/trainee/:traineeId/workoutplans/current" element={<TraineeTrainingPlan  />} />
+                <Route path="/trainee/:traineeId/enter/details" element={<EnterTraineeDetails  />} />
             </Routes>
         </div>
     );

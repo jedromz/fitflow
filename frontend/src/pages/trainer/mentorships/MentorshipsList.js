@@ -170,82 +170,96 @@ export default function MentorshipsList() {
 
       {showAddModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
-          <div className="relative mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
-            <div className="mt-3 text-center">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Add New Mentorship</h3>
-              <form className="mt-2" onSubmit={handleSubmit}>
-                <input
-                  className="mt-2 p-2 w-full border rounded-md"
-                  name="startDate"
-                  type="date"
-                  value={newMentorship.startDate}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  className="mt-2 p-2 w-full border rounded-md"
-                  name="endDate"
-                  type="date"
-                  value={newMentorship.endDate}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  className="mt-2 p-2 w-full border rounded-md"
-                  name="price"
-                  type="number"
-                  value={newMentorship.price}
-                  onChange={handleChange}
-                  required
-                />
-                <select
-                  className="mt-2 p-2 w-full border rounded-md"
-                  name="email"
-                  value={newMentorship.traineeId}
-                  onChange={handleSelectTrainee}
-                >
-                  <option value="">Select Trainee</option>
-                  {trainees.map((trainee) => (
-                    <option key={trainee.id} value={trainee.email}>
-                      {trainee.name}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  className="mt-2 p-2 w-full border rounded-md"
-                  name="traineeName"
-                  type="text"
-                  value={newMentorship.traineeName}
-                  onChange={handleNewTraineeEntry}
-                  required
-                />
-                <input
-                  className="mt-2 p-2 w-full border rounded-md"
-                  name="email"
-                  type="email"
-                  value={newMentorship.email}
-                  onChange={handleNewTraineeEntry}
-                />
-                <div className="items-center px-4 py-3">
-                  <button
-                    className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    type="submit"
-                  >
-                    Add Mentorship
-                  </button>
-                </div>
-              </form>
+        <div className="relative mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+          <div className="mt-3 text-center">
+            <h3 className="text-lg leading-6 font-medium text-gray-900">Add New Mentorship</h3>
+            <form className="mt-2" onSubmit={handleSubmit}>
+              <input
+                className="mt-2 p-2 w-full border rounded-md"
+                name="startDate"
+                type="date"
+                value={newMentorship.startDate}
+                onChange={handleChange}
+                required
+              />
+              <input
+                className="mt-2 p-2 w-full border rounded-md"
+                name="endDate"
+                type="date"
+                value={newMentorship.endDate}
+                onChange={handleChange}
+                required
+              />
+              <input
+                className="mt-2 p-2 w-full border rounded-md"
+                name="price"
+                type="number"
+                value={newMentorship.price}
+                onChange={handleChange}
+                required
+              />
+              <label className="block mt-4 text-gray-700 font-semibold">Select Existing Trainee:</label>
+              <select
+                className="mt-2 p-2 w-full border rounded-md"
+                name="traineeId"
+                value={newMentorship.traineeId}
+                onChange={handleSelectTrainee}
+              >
+                <option value="">Select Trainee</option>
+                {trainees.map((trainee) => (
+                  <option key={trainee.id} value={trainee.email}>
+                    {trainee.name}
+                  </option>
+                ))}
+              </select>
+              <label className="block mt-4 text-gray-700 font-semibold">Or Add New Trainee:</label>
+              <input
+                className="mt-2 p-2 w-full border rounded-md"
+                name="firstName"
+                type="text"
+                placeholder="First Name"
+                value={newMentorship.firstName}
+                onChange={handleNewTraineeEntry}
+                required
+              />
+              <input
+                className="mt-2 p-2 w-full border rounded-md"
+                name="lastName"
+                type="text"
+                placeholder="Last Name"
+                value={newMentorship.lastName}
+                onChange={handleNewTraineeEntry}
+                required
+              />
+              <input
+                className="mt-2 p-2 w-full border rounded-md"
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={newMentorship.email}
+                onChange={handleNewTraineeEntry}
+                required
+              />
               <div className="items-center px-4 py-3">
                 <button
-                  className="px-4 py-2 bg-white text-red-500 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500"
-                  onClick={() => setShowAddModal(false)}
+                  className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  type="submit"
                 >
-                  Cancel
+                  Add Mentorship
                 </button>
               </div>
+            </form>
+            <div className="items-center px-4 py-3">
+              <button
+                className="px-4 py-2 bg-white text-red-500 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500"
+                onClick={() => setShowAddModal(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
+      </div>      
       )}
 
 {showDetailModal && selectedMentorship && (

@@ -3,6 +3,13 @@ INSERT INTO users (id, username, password) VALUES
     (3000, 'admin', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC'),
     (2000, 'trainer', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC'),
     (1000, 'trainee', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC');
+-- Insert users for new trainees
+INSERT INTO users (id, username, password) VALUES
+    (1001, 'alice_smith', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC'),
+    (1002, 'bob_johnson', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC'),
+    (1003, 'charlie_brown', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC'),
+    (1004, 'david_wilson', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC'),
+    (1005, 'eve_davis', '$2a$12$eI7rtBvngtesW4eGM8771eO4lXHfQ9cQkNbuEAbKhiBQtyWSELogC');
 
 -- Insert trainers
 INSERT INTO trainer (id, user_id, name, email, phone, instagram, website, bio, photo, password) VALUES
@@ -11,12 +18,27 @@ INSERT INTO trainer (id, user_id, name, email, phone, instagram, website, bio, p
 -- Insert trainees
 INSERT INTO trainee (id, user_id, name, email, height, weight) VALUES
     (1000, 1000, 'Jane Doe', 'janedoe@example.com', 1.65, 60);
+-- Insert new trainees
+INSERT INTO trainee (id, user_id, name, email, height, weight) VALUES
+    (1001, 1001, 'Alice Smith', 'alice.smith@example.com', 1.70, 65),
+    (1002, 1002, 'Bob Johnson', 'bob.johnson@example.com', 1.80, 75),
+    (1003, 1003, 'Charlie Brown', 'charlie.brown@example.com', 1.75, 70),
+    (1004, 1004, 'David Wilson', 'david.wilson@example.com', 1.68, 68),
+    (1005, 1005, 'Eve Davis', 'eve.davis@example.com', 1.62, 58);
 
 -- Insert mentorships
 INSERT INTO mentorship (id, start_date, end_date, price, trainer_id, trainee_id) VALUES
     (1000, '2024-01-01', '2024-06-30', 300.0, 2000, 1000),
     (1001, '2025-01-01', '2025-06-30', 300.0, 2000, 1000),
     (1002, '2024-05-05', '2025-10-30', 300.0, 2000, 1000);
+    -- Insert new mentorships with the existing trainer (id: 2000)
+    INSERT INTO mentorship (id, start_date, end_date, price, trainer_id, trainee_id) VALUES
+        (1003, '2024-02-01', '2024-07-31', 300.0, 2000, 1001),
+        (1004, '2024-03-01', '2024-08-31', 300.0, 2000, 1002),
+        (1005, '2024-04-01', '2024-09-30', 300.0, 2000, 1003),
+        (1006, '2024-05-01', '2024-10-31', 300.0, 2000, 1004),
+        (1007, '2024-06-01', '2024-11-30', 300.0, 2000, 1005);
+
 
 -- Insert workout plans
 INSERT INTO workout_plan (id, name, description, from_date, to_date, trainee_id, trainer_id) VALUES
@@ -122,19 +144,87 @@ INSERT INTO report (id, date, trainee_id, trainer_id, title, content) VALUES
     (3000, '2024-01-16', 1000, 2000, 'Week 3: Progress in Strength and Stamina', 'By the third week, there was noticeable progress in the trainee''s strength and stamina. We increased the intensity of workouts slightly to continue challenging the trainee. The trainee remained motivated and consistent with the training schedule.'),
     (4000, '2024-01-23', 1000, 2000, 'Week 4: Mid-Program Evaluation and Adjustments', 'In the fourth week, we conducted a mid-program evaluation to assess the trainee''s progress. The results were positive, with significant improvements in various fitness parameters. Based on the evaluation, we made minor adjustments to the training plan to better align with the trainee''s evolving needs and goals.');
 
--- Insert measurement records
+-- Insert measurement records in smaller batches to prevent overflow
 INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id) VALUES
-    (1000, 'WEIGHT', 70.5, 'KG', '2024-05-24', 1000),
-    (2000, 'SHOULDERS', 120.0, 'CM', '2024-05-24', 1000),
-    (3000, 'CHEST', 95.0, 'CM', '2024-05-24', 1000),
-    (4000, 'RIGHT_ARM', 35.0, 'CM', '2024-05-24', 1000),
-    (5000, 'LEFT_ARM', 34.5, 'CM', '2024-05-24', 1000),
-    (6000, 'WAIST', 80.0, 'CM', '2024-05-24', 1000),
-    (7000, 'HIPS', 90.0, 'CM', '2024-05-24', 1000),
-    (8000, 'RIGHT_THIGH', 55.0, 'CM', '2024-05-24', 1000),
-    (9000, 'LEFT_THIGH', 54.5, 'CM', '2024-05-24', 1000),
-    (10000, 'RIGHT_CALF', 37.0, 'CM', '2024-05-24', 1000),
-    (11000, 'LEFT_CALF', 36.5, 'CM', '2024-05-24', 1000);
+    (11001, 'WEIGHT', 70.0, 'KG', '2024-05-31', 1000),
+    (11002, 'SHOULDERS', 120.5, 'CM', '2024-05-31', 1000),
+    (11003, 'CHEST', 94.5, 'CM', '2024-05-31', 1000),
+    (11004, 'RIGHT_ARM', 35.1, 'CM', '2024-05-31', 1000),
+    (11005, 'LEFT_ARM', 34.6, 'CM', '2024-05-31', 1000),
+    (11006, 'WAIST', 79.5, 'CM', '2024-05-31', 1000),
+    (11007, 'HIPS', 89.5, 'CM', '2024-05-31', 1000),
+    (11008, 'RIGHT_THIGH', 55.1, 'CM', '2024-05-31', 1000),
+    (11009, 'LEFT_THIGH', 54.6, 'CM', '2024-05-31', 1000),
+    (11010, 'RIGHT_CALF', 37.1, 'CM', '2024-05-31', 1000),
+    (11011, 'LEFT_CALF', 36.6, 'CM', '2024-05-31', 1000);
+
+INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id) VALUES
+    (11012, 'WEIGHT', 69.8, 'KG', '2024-06-07', 1000),
+    (11013, 'SHOULDERS', 121.0, 'CM', '2024-06-07', 1000),
+    (11014, 'CHEST', 94.0, 'CM', '2024-06-07', 1000),
+    (11015, 'RIGHT_ARM', 35.2, 'CM', '2024-06-07', 1000),
+    (11016, 'LEFT_ARM', 34.7, 'CM', '2024-06-07', 1000),
+    (11017, 'WAIST', 79.0, 'CM', '2024-06-07', 1000),
+    (11018, 'HIPS', 89.0, 'CM', '2024-06-07', 1000),
+    (11019, 'RIGHT_THIGH', 55.2, 'CM', '2024-06-07', 1000),
+    (11020, 'LEFT_THIGH', 54.7, 'CM', '2024-06-07', 1000),
+    (11021, 'RIGHT_CALF', 37.2, 'CM', '2024-06-07', 1000),
+    (11022, 'LEFT_CALF', 36.7, 'CM', '2024-06-07', 1000);
+
+-- Continue splitting the large INSERT statement for measurement records into smaller batches
+
+INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id) VALUES
+    (11023, 'WEIGHT', 69.5, 'KG', '2024-06-14', 1000),
+    (11024, 'SHOULDERS', 121.5, 'CM', '2024-06-14', 1000),
+    (11025, 'CHEST', 93.5, 'CM', '2024-06-14', 1000),
+    (11026, 'RIGHT_ARM', 35.3, 'CM', '2024-06-14', 1000),
+    (11027, 'LEFT_ARM', 34.8, 'CM', '2024-06-14', 1000),
+    (11028, 'WAIST', 78.5, 'CM', '2024-06-14', 1000),
+    (11029, 'HIPS', 88.5, 'CM', '2024-06-14', 1000),
+    (11030, 'RIGHT_THIGH', 55.3, 'CM', '2024-06-14', 1000),
+    (11031, 'LEFT_THIGH', 54.8, 'CM', '2024-06-14', 1000),
+    (11032, 'RIGHT_CALF', 37.3, 'CM', '2024-06-14', 1000),
+    (11033, 'LEFT_CALF', 36.8, 'CM', '2024-06-14', 1000);
+
+INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id) VALUES
+    (11034, 'WEIGHT', 69.2, 'KG', '2024-06-21', 1000),
+    (11035, 'SHOULDERS', 122.0, 'CM', '2024-06-21', 1000),
+    (11036, 'CHEST', 93.0, 'CM', '2024-06-21', 1000),
+    (11037, 'RIGHT_ARM', 35.4, 'CM', '2024-06-21', 1000),
+    (11038, 'LEFT_ARM', 34.9, 'CM', '2024-06-21', 1000),
+    (11039, 'WAIST', 78.0, 'CM', '2024-06-21', 1000),
+    (11040, 'HIPS', 88.0, 'CM', '2024-06-21', 1000),
+    (11041, 'RIGHT_THIGH', 55.4, 'CM', '2024-06-21', 1000),
+    (11042, 'LEFT_THIGH', 54.9, 'CM', '2024-06-21', 1000),
+    (11043, 'RIGHT_CALF', 37.4, 'CM', '2024-06-21', 1000),
+    (11044, 'LEFT_CALF', 36.9, 'CM', '2024-06-21', 1000);
+
+INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id) VALUES
+    (11045, 'WEIGHT', 69.0, 'KG', '2024-06-28', 1000),
+    (11046, 'SHOULDERS', 122.5, 'CM', '2024-06-28', 1000),
+    (11047, 'CHEST', 92.5, 'CM', '2024-06-28', 1000),
+    (11048, 'RIGHT_ARM', 35.5, 'CM', '2024-06-28', 1000),
+    (11049, 'LEFT_ARM', 35.0, 'CM', '2024-06-28', 1000),
+    (11050, 'WAIST', 77.5, 'CM', '2024-06-28', 1000),
+    (11051, 'HIPS', 87.5, 'CM', '2024-06-28', 1000),
+    (11052, 'RIGHT_THIGH', 55.5, 'CM', '2024-06-28', 1000),
+    (11053, 'LEFT_THIGH', 55.0, 'CM', '2024-06-28', 1000),
+    (11054, 'RIGHT_CALF', 37.5, 'CM', '2024-06-28', 1000),
+    (11055, 'LEFT_CALF', 37.0, 'CM', '2024-06-28', 1000);
+
+INSERT INTO measurement_record (id, body_part, measurement_value, unit, date, trainee_id) VALUES
+    (11056, 'WEIGHT', 68.8, 'KG', '2024-07-05', 1000),
+    (11057, 'SHOULDERS', 123.0, 'CM', '2024-07-05', 1000),
+    (11058, 'CHEST', 92.0, 'CM', '2024-07-05', 1000),
+    (11059, 'RIGHT_ARM', 35.6, 'CM', '2024-07-05', 1000),
+    (11060, 'LEFT_ARM', 35.1, 'CM', '2024-07-05', 1000),
+    (11061, 'WAIST', 77.0, 'CM', '2024-07-05', 1000),
+    (11062, 'HIPS', 87.0, 'CM', '2024-07-05', 1000),
+    (11063, 'RIGHT_THIGH', 55.6, 'CM', '2024-07-05', 1000),
+    (11064, 'LEFT_THIGH', 55.1, 'CM', '2024-07-05', 1000),
+    (11065, 'RIGHT_CALF', 37.6, 'CM', '2024-07-05', 1000),
+    (11066, 'LEFT_CALF', 37.1, 'CM', '2024-07-05', 1000);
+
 
 -- Insert roles
 INSERT INTO roles (id, name) VALUES
