@@ -1,14 +1,10 @@
-import React, { useState,useEffect } from 'react';
-import {useParams} from 'react-router-dom';
-// Initial workout items
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-
-
-// Assuming a predefined list of trainees
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const WorkoutBuilder = () => {
-    const [exercises,setExercises] = useState([])
+    const [exercises, setExercises] = useState([]);
     const [availableWorkouts, setAvailableWorkouts] = useState([]);
     const [plan, setPlan] = useState(days.reduce((acc, day) => ({ ...acc, [day]: [] }), {}));
     const [planName, setPlanName] = useState('');
@@ -17,10 +13,11 @@ const WorkoutBuilder = () => {
     const [description, setDescription] = useState('');
     const [selectedTrainee, setSelectedTrainee] = useState('');
     const [trainees, setTrainees] = useState([]);
+    const [errors, setErrors] = useState({});
     const { trainerId } = useParams();
-    
+
     useEffect(() => {
-    fetch(`/exercises`) // Corrected endpoint for fetching exercises
+        fetch(`/exercises`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -29,7 +26,7 @@ const WorkoutBuilder = () => {
             })
             .then(data => setExercises(data))
             .catch(error => console.error("There was an error fetching the workouts: ", error));
-        
+
         fetch(`/api/trainers/${trainerId}/mentorships`)
             .then(response => {
                 if (!response.ok) {
@@ -37,13 +34,11 @@ const WorkoutBuilder = () => {
                 }
                 return response.json();
             })
-            .then(data => {
-
-            })
             .catch(error => {
                 console.error("There was an error fetching the mentorships: ", error);
             });
-        fetch(`/api/trainers/${trainerId}/trainees`) // Adjust this endpoint as necessary
+
+        fetch(`/api/trainers/${trainerId}/trainees`)
             .then(response => response.json())
             .then(data => setTrainees(data))
             .catch(error => console.error("There was an error fetching the trainees: ", error));
@@ -76,23 +71,18 @@ const WorkoutBuilder = () => {
         setPlanName(e.target.value);
     };
     const handleFromDateChange = (e) => {
-            setFromDate(e.target.value);
-        };
-        const handleToDateChange = (e) => {
-                setToDate(e.target.value);
-            };
+        setFromDate(e.target.value);
+    };
+    const handleToDateChange = (e) => {
+        setToDate(e.target.value);
+    };
     const handleDescriptionChange = (e) => {
-            setDescription(e.target.value);
-        };
-
-    const handleTraineeChange = (e) => {
-    console.log(trainees)
-        console.log('Selected value:', e.target.value); // Should log the id
-        console.log('All options:', e.target.options); // See all options in the dropdown
-
-        setSelectedTrainee(e.target.value);
+        setDescription(e.target.value);
     };
 
+    const handleTraineeChange = (e) => {
+        setSelectedTrainee(e.target.value);
+    };
 
     const handleExerciseChange = (day, id, field, value) => {
         setPlan((current) => ({
@@ -109,22 +99,35 @@ const WorkoutBuilder = () => {
             [day]: current[day].filter((exercise) => exercise.id !== id)
         }));
     };
+
     const clearPlan = () => {
-           setPlan(days.reduce((acc, day) => ({ ...acc, [day]: [] }), {}));
-       };
+        setPlan(days.reduce((acc, day) => ({ ...acc, [day]: [] }), {}));
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!planName) newErrors.planName = 'Plan name is required';
+        if (!fromDate) newErrors.fromDate = 'From date is required';
+        if (!toDate) newErrors.toDate = 'To date is required';
+        if (fromDate && toDate && fromDate > toDate) {
+            newErrors.toDate = 'To date must be after from date';
+        }
+        if (!selectedTrainee) newErrors.selectedTrainee = 'Trainee selection is required';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const savePlan = () => {
+        if (!validateForm()) return;
 
-    console.log(trainerId)
-    console.log(selectedTrainee)
-        // Construct the workout plan data
         const workoutPlanData = {
             name: planName,
-            description: description, // Add a description if needed or modify as necessary
-            fromDate: fromDate, // Set these dates as required
-            toDate: toDate, // Set these dates as required
+            description: description,
+            fromDate: fromDate,
+            toDate: toDate,
             trainerId: trainerId,
-            traineeEmail: selectedTrainee, // Set this based on your application's logic or selection
+            traineeEmail: selectedTrainee,
             workouts: Object.entries(plan).map(([day, exercises]) => ({
                 name: day,
                 exercises: exercises.map(ex => ({
@@ -135,8 +138,7 @@ const WorkoutBuilder = () => {
             }))
         };
 
-        // Send the data to your backend
-        fetch('/workoutplans', { // Change the URL as needed
+        fetch('/workoutplans', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -151,17 +153,14 @@ const WorkoutBuilder = () => {
             })
             .then(data => {
                 console.log('Success:', data);
-                // Here you can handle the UI response, like showing a success message
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // Here you can handle the UI response, like showing an error message
             });
     };
 
-
     return (
-        <div className="flex flex-col gap-4 p-5" >
+        <div className="flex flex-col gap-4 p-5">
             <div className="flex gap-4 mb-4">
                 <input
                     type="text"
@@ -170,45 +169,49 @@ const WorkoutBuilder = () => {
                     onChange={handlePlanNameChange}
                     className="p-2 border rounded"
                 />
+                {errors.planName && <span className="text-red-500 text-sm">{errors.planName}</span>}
                 <input
-                                    type="text"
-                                    placeholder="Description"
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                    className="p-2 border rounded"
-                                />
-                                <input
-                                    type="date"
-                                    placeholder="From Date"
-                                    value={fromDate}
-                                    onChange={handleFromDateChange}
-                                    className="p-2 border rounded"
-                                />
-                                <input
-                                    type="date"
-                                    placeholder="To Date"
-                                    value={toDate}
-                                    onChange={handleToDateChange}
-                                    className="p-2 border rounded"
-                                />
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    className="p-2 border rounded"
+                />
+                <input
+                    type="date"
+                    placeholder="From Date"
+                    value={fromDate}
+                    onChange={handleFromDateChange}
+                    className="p-2 border rounded"
+                />
+                {errors.fromDate && <span className="text-red-500 text-sm">{errors.fromDate}</span>}
+                <input
+                    type="date"
+                    placeholder="To Date"
+                    value={toDate}
+                    onChange={handleToDateChange}
+                    className="p-2 border rounded"
+                />
+                {errors.toDate && <span className="text-red-500 text-sm">{errors.toDate}</span>}
                 <select
-                       value={selectedTrainee}
-                       onChange={handleTraineeChange}
-                       className="p-2 border rounded"
-                   >
-                       <option value="">Select Trainee</option>
-                       {trainees.map((trainee) => (
-                           <option key={trainee.email} value={trainee.email}>
-                               {trainee.name}
-                           </option>
-                       ))}
-                   </select>
+                    value={selectedTrainee}
+                    onChange={handleTraineeChange}
+                    className="p-2 border rounded"
+                >
+                    <option value="">Select Trainee</option>
+                    {trainees.map((trainee) => (
+                        <option key={trainee.email} value={trainee.email}>
+                            {trainee.name}
+                        </option>
+                    ))}
+                </select>
+                {errors.selectedTrainee && <span className="text-red-500 text-sm">{errors.selectedTrainee}</span>}
                 <button onClick={savePlan} className="p-2 bg-blue-500 text-white rounded">
                     Save Plan
                 </button>
                 <button onClick={clearPlan} className="p-2 bg-blue-500 text-white rounded">
-                                    Clear
-                                </button>
+                    Clear
+                </button>
             </div>
             <div className="flex gap-4">
                 <div
@@ -235,7 +238,7 @@ const WorkoutBuilder = () => {
                         {days.map((day) => (
                             <div
                                 key={day}
-                                className="p-4 rounded "
+                                className="p-4 rounded"
                                 onDragOver={onDragOver}
                                 onDrop={(e) => onDropToDay(e, day)}
                             >

@@ -12,12 +12,12 @@ export default function TraineeReports() {
     const [photoUrls, setPhotoUrls] = useState({});
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    
+
     const getTodayDate = () => {
         const today = new Date();
         return today.toISOString().split('T')[0];
     };
-    
+
     useEffect(() => {
         fetch(`/trainees/${traineeId}/reports`)
             .then(response => {
@@ -113,7 +113,17 @@ export default function TraineeReports() {
     const handleAddReport = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-    
+
+        const title = formData.get('title');
+        const content = formData.get('content');
+        const date = formData.get('date');
+
+        // Validation
+        if (!title || !content || !date) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
         fetch(`/trainees/${traineeId}/report`, {
             method: 'POST',
             body: formData
@@ -145,7 +155,7 @@ export default function TraineeReports() {
                 .catch(error => {
                     console.error('There was a problem fetching the reports or photo URLs:', error);
                 });
-    
+
             closeAddModal();
         })
         .catch(error => {

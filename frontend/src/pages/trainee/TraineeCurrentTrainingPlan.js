@@ -32,13 +32,15 @@ export default function TraineeTrainingPlan() {
     }, [trainingPlan, traineeId]);
 
     const handleProgressionChange = (exerciseName, field, value) => {
-        setProgressions(prevState => ({
-            ...prevState,
-            [exerciseName]: {
-                ...prevState[exerciseName],
-                [field]: value
-            }
-        }));
+        if (value >= 0) {
+            setProgressions(prevState => ({
+                ...prevState,
+                [exerciseName]: {
+                    ...prevState[exerciseName],
+                    [field]: value
+                }
+            }));
+        }
     };
 
     const handleFormSubmit = (e, exerciseName) => {
@@ -76,58 +78,65 @@ export default function TraineeTrainingPlan() {
                 <div className="mx-auto max-w-4xl">
                     <h1 className="text-2xl font-semibold mb-6 text-center">Training Plan</h1>
                     {trainingPlan ? (
-                        <div className="bg-white shadow-md rounded-lg p-6">
-                            <h2 className="text-xl font-semibold mb-4 text-center">{trainingPlan.name}</h2>
-                            <p className="mb-6 text-center">{trainingPlan.description}</p>
-                            {daysOfWeek.map(day => (
-                                <div key={day} className="mb-8">
-                                    <h3 className="text-lg font-semibold mb-2">{day}</h3>
-                                    <ul>
-                                        {trainingPlan.exercies.filter(exercise => exercise.dayOfWeek === day).sort((a, b) => a.exerciseOrder - b.exerciseOrder).map(exercise => (
-                                            <li key={exercise.name} className="mb-4">
-                                                <div className="flex justify-between items-center">
-                                                    <span className="w-1/4">{exercise.name}</span>
-                                                    <form className="flex space-x-2 w-3/4" onSubmit={(e) => handleFormSubmit(e, exercise.name)}>
-                                                        <input
-                                                            type="number"
-                                                            placeholder="Sets"
-                                                            value={progressions[exercise.name]?.sets || ''}
-                                                            onChange={(e) => handleProgressionChange(exercise.name, 'sets', e.target.value)}
-                                                            className="border rounded py-1 px-2 w-1/3"
-                                                        />
-                                                        <input
-                                                            type="number"
-                                                            placeholder="Reps"
-                                                            value={progressions[exercise.name]?.reps || ''}
-                                                            onChange={(e) => handleProgressionChange(exercise.name, 'reps', e.target.value)}
-                                                            className="border rounded py-1 px-2 w-1/3"
-                                                        />
-                                                        <input
-                                                            type="number"
-                                                            placeholder="Weight"
-                                                            value={progressions[exercise.name]?.weight || ''}
-                                                            onChange={(e) => handleProgressionChange(exercise.name, 'weight', e.target.value)}
-                                                            className="border rounded py-1 px-2 w-1/3"
-                                                        />
-                                                        <button
-                                                            type="submit"
-                                                            className="px-4 py-1 bg-blue-600 text-white rounded"
-                                                        >
-                                                            Save
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                                {progressions[exercise.name] && (
-                                                    <div className="mt-2 text-gray-600 text-sm">
-                                                        <p>Last Progression - Sets: {progressions[exercise.name].sets}, Reps: {progressions[exercise.name].reps}, Weight: {progressions[exercise.name].weight}</p>
+                        trainingPlan.exercies.length > 0 ? (
+                            <div className="bg-white shadow-md rounded-lg p-6">
+                                <h2 className="text-xl font-semibold mb-4 text-center">{trainingPlan.name}</h2>
+                                <p className="mb-6 text-center">{trainingPlan.description}</p>
+                                {daysOfWeek.map(day => (
+                                    <div key={day} className="mb-8">
+                                        <h3 className="text-lg font-semibold mb-2">{day}</h3>
+                                        <ul>
+                                            {trainingPlan.exercies.filter(exercise => exercise.dayOfWeek === day).sort((a, b) => a.exerciseOrder - b.exerciseOrder).map(exercise => (
+                                                <li key={exercise.name} className="mb-4">
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="w-1/4">{exercise.name}</span>
+                                                        <form className="flex space-x-2 w-3/4" onSubmit={(e) => handleFormSubmit(e, exercise.name)}>
+                                                            <input
+                                                                type="number"
+                                                                placeholder="Sets"
+                                                                value={progressions[exercise.name]?.sets || ''}
+                                                                onChange={(e) => handleProgressionChange(exercise.name, 'sets', e.target.value)}
+                                                                className="border rounded py-1 px-2 w-1/3"
+                                                                min="0"
+                                                            />
+                                                            <input
+                                                                type="number"
+                                                                placeholder="Reps"
+                                                                value={progressions[exercise.name]?.reps || ''}
+                                                                onChange={(e) => handleProgressionChange(exercise.name, 'reps', e.target.value)}
+                                                                className="border rounded py-1 px-2 w-1/3"
+                                                                min="0"
+                                                            />
+                                                            <input
+                                                                type="number"
+                                                                placeholder="Weight"
+                                                                value={progressions[exercise.name]?.weight || ''}
+                                                                onChange={(e) => handleProgressionChange(exercise.name, 'weight', e.target.value)}
+                                                                className="border rounded py-1 px-2 w-1/3"
+                                                                min="0"
+                                                            />
+                                                            <button
+                                                                type="submit"
+                                                                className="px-4 py-1 bg-blue-600 text-white rounded"
+                                                            >
+                                                                Save
+                                                            </button>
+                                                        </form>
                                                     </div>
-                                                )}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
-                        </div>
+                                                    {progressions[exercise.name] && (
+                                                        <div className="mt-2 text-gray-600 text-sm">
+                                                            <p>Last Progression - Sets: {progressions[exercise.name].sets}, Reps: {progressions[exercise.name].reps}, Weight: {progressions[exercise.name].weight}</p>
+                                                        </div>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-center">No exercises in the training plan.</p>
+                        )
                     ) : (
                         <p className="text-center">Loading training plan...</p>
                     )}

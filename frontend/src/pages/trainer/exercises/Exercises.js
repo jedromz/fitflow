@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NumberTile from '../components/NumberTile';
-import IconTile from '../components/IconTile';
 import Appbar from '../components/Appbar';
 
 export default function Exercises() {
@@ -11,6 +9,9 @@ export default function Exercises() {
         description: '',
         category: ''
     });
+    const [errors, setErrors] = useState({});
+
+    const categories = ['Strength', 'Cardio', 'Flexibility', 'Balance', 'Endurance']; // Define your categories here
 
     useEffect(() => {
         fetch('/exercises')
@@ -36,7 +37,19 @@ export default function Exercises() {
         }));
     };
 
+    const validateForm = () => {
+        const newErrors = {};
+        if (!newExercise.name) newErrors.name = 'Name is required';
+        if (!newExercise.description) newErrors.description = 'Description is required';
+        if (!newExercise.category) newErrors.category = 'Category is required';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleAddExercise = async () => {
+        if (!validateForm()) return;
+
         try {
             const response = await fetch('/exercises', {
                 method: 'POST',
@@ -108,6 +121,7 @@ export default function Exercises() {
                                     placeholder="Exercise Name"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                                 />
+                                {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
                                 <textarea
                                     name="description"
                                     value={newExercise.description}
@@ -116,14 +130,21 @@ export default function Exercises() {
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                                     rows="4"
                                 ></textarea>
-                                <input
-                                    type="text"
+                                {errors.description && <span className="text-red-500 text-sm">{errors.description}</span>}
+                                <select
                                     name="category"
                                     value={newExercise.category}
                                     onChange={handleInputChange}
-                                    placeholder="Category"
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                                />
+                                >
+                                    <option value="">Select Category</option>
+                                    {categories.map((category) => (
+                                        <option key={category} value={category}>
+                                            {category}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.category && <span className="text-red-500 text-sm">{errors.category}</span>}
                             </div>
                             <div className="items-center px-4 py-3">
                                 <button 

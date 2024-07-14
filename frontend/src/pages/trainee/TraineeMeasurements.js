@@ -55,6 +55,15 @@ export default function TraineesMeasurements() {
         setIsFormModalOpen(false);
     };
 
+    const validateMeasurements = (measurements) => {
+        for (const measurement of measurements) {
+            if (measurement.measurement.measurementValue < 0) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -70,6 +79,11 @@ export default function TraineesMeasurements() {
                 unit: formData.get(`${bodyPart.toLowerCase().replace(/_/g, '')}Unit`)
             }
         }));
+
+        if (!validateMeasurements(newMeasurements)) {
+            alert("Measurement values cannot be negative");
+            return;
+        }
 
         const payload = {
             measurements: newMeasurements
@@ -205,7 +219,7 @@ export default function TraineesMeasurements() {
                                                     {label}
                                                 </label>
                                                 <div className="flex">
-                                                    <input type="number" step="0.1" name={`${id}Value`} id={`${id}Value`} className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+                                                    <input type="number" step="0.1" min="0" name={`${id}Value`} id={`${id}Value`} className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
                                                     <select name={`${id}Unit`} id={`${id}Unit`} value={unit} onChange={(e) => handleUnitChange(e.target.value)} className="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" required>
                                                         {unitOptions.map(option => (
                                                             <option key={option} value={option}>{option}</option>
