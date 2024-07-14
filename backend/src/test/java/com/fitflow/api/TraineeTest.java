@@ -1,6 +1,6 @@
 package com.fitflow.api;
 
-imporstatic org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.fitflow.api.mentorships.model.Mentorship;
@@ -22,22 +22,22 @@ public class TraineeTest {
 
     @Mock
     private Progression progression1;
-    
+
     @Mock
     private Progression progression2;
-    
+
     @Mock
     private WorkoutPlan workoutPlan1;
-    
+
     @Mock
     private WorkoutPlan workoutPlan2;
-    
+
     @Mock
     private Mentorship mentorship1;
-    
+
     @Mock
     private Mentorship mentorship2;
-    
+
     @Mock
     private Trainer trainer;
 
@@ -53,13 +53,13 @@ public class TraineeTest {
         when(progression1.getDate()).thenReturn(LocalDate.of(2022, 1, 1));
         when(progression1.getSets()).thenReturn(3);
         when(progression1.getReps()).thenReturn(10);
-        when(progression1.getWeight()).thenReturn(100.0);
+        when(progression1.getWeight()).thenReturn((int) 100.0);
 
         when(progression2.getExercise().getName()).thenReturn("Squat");
         when(progression2.getDate()).thenReturn(LocalDate.of(2022, 2, 1));
         when(progression2.getSets()).thenReturn(4);
         when(progression2.getReps()).thenReturn(8);
-        when(progression2.getWeight()).thenReturn(120.0);
+        swhen(progression2.getWeight()).thenReturn((int) 120.0);
 
         trainee.getProgressions().add(progression1);
         trainee.getProgressions().add(progression2);
@@ -67,7 +67,7 @@ public class TraineeTest {
         // Set up mock data for workout plans
         when(workoutPlan1.getFromDate()).thenReturn(LocalDate.of(2022, 1, 1));
         when(workoutPlan1.getToDate()).thenReturn(LocalDate.of(2022, 6, 1));
-        
+
         when(workoutPlan2.getFromDate()).thenReturn(LocalDate.of(2022, 7, 1));
         when(workoutPlan2.getToDate()).thenReturn(LocalDate.of(2022, 12, 1));
 
@@ -78,7 +78,7 @@ public class TraineeTest {
         when(mentorship1.getFromDate()).thenReturn(LocalDate.of(2022, 1, 1));
         when(mentorship1.getToDate()).thenReturn(LocalDate.of(2022, 6, 1));
         when(mentorship1.getTrainer()).thenReturn(trainer);
-        
+
         when(mentorship2.getFromDate()).thenReturn(LocalDate.of(2022, 7, 1));
         when(mentorship2.getToDate()).thenReturn(LocalDate.of(2022, 12, 1));
         when(mentorship2.getTrainer()).thenReturn(trainer);
